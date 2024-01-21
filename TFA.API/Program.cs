@@ -1,9 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using TFA.Domain.UseCases.CreateTopic;
 using TFA.Domain.UseCases.GetForums;
 using TFA.Storage;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddScoped<ICreateTopicUseCase, CreateTopicUseCase>();
 builder.Services.AddScoped<IGetForumsUseCase, GetForumsUseCase>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
