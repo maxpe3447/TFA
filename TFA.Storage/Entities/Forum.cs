@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TFA.Storage;
+namespace TFA.Storage.Entities;
 
 public class Forum
 {
