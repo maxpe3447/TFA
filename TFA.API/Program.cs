@@ -10,7 +10,8 @@ builder.Services.AddScoped<IGetForumsUseCase, GetForumsUseCase>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContextPool<ForumDbContext>(opt=>opt
+//builder.Services.AddDbContextPool<ForumDbContext>(opt=>opt
+builder.Services.AddDbContext<ForumDbContext>(opt=> opt
 .UseNpgsql(builder.Configuration.GetConnectionString("Postgres"), b=>b.MigrationsAssembly("TFA.API")));
 
 var app = builder.Build();
@@ -22,7 +23,9 @@ app.UseSwaggerUI();
 app.UseAuthorization();
 
 app.MapControllers();
+using var scope = app.Services.CreateScope();
+var service = scope.ServiceProvider;
 
-//app.Services.GetRequiredService<ForumDbContext>().Database.Migrate();
+service.GetRequiredService<ForumDbContext>().Database.Migrate();
 
 app.Run();
