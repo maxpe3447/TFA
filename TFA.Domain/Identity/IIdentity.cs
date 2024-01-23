@@ -1,6 +1,6 @@
 ﻿namespace TFA.Domain.Identity;
 
-internal interface IIdentity
+public interface IIdentity
 {
     Guid UserId { get; }
 }

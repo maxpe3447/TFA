@@ -1,6 +1,6 @@
 ﻿namespace TFA.Domain.Identity;
 
-internal interface IIdentityProvider
+public interface IIdentityProvider
 {
     IIdentity Current { get; }
 }
