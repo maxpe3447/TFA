@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using TFA.Domain.Authorization;
 using TFA.Domain.UseCases.CreateTopic;
 using TFA.Domain.UseCases.GetForums;
 using TFA.Storage;
@@ -10,6 +11,9 @@ builder.Services.AddScoped<IGetForumsUseCase, GetForumsUseCase>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<ICreateTopicStorage>();
+builder.Services.AddScoped<IIntentionResolver, TopicIntentionalResolver>();
+builder.Services.AddScoped<IIntentionManager, IntentionManager>();
 //builder.Services.AddDbContextPool<ForumDbContext>(opt=>opt
 builder.Services.AddDbContext<ForumDbContext>(opt=> opt
 .UseNpgsql(builder.Configuration.GetConnectionString("Postgres"), b=>b.MigrationsAssembly("TFA.API")));
