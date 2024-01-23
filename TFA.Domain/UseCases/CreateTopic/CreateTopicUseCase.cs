@@ -1,5 +1,5 @@
 ﻿using TFA.Domain.Exceptions;
-using TFA.Domain.Identity;
+using TFA.Domain.Authentication;
 using TFA.Domain.Models;
 
 namespace TFA.Domain.UseCases.CreateTopic;
@@ -23,6 +23,6 @@ public class CreateTopicUseCase : ICreateTopicUseCase
         {
             throw new ForumNotFoundException(forumId);
         }
-        return await storage.CreateTopic(forumId, identityProvider.Current, title, cancellationToken);
+        return await storage.CreateTopic(forumId, identityProvider.Current.UserId, title, cancellationToken);
     }
 }

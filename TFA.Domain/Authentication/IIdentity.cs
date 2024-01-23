@@ -1,4 +1,4 @@
-﻿namespace TFA.Domain.Identity;
+﻿namespace TFA.Domain.Authentication;
 
 public interface IIdentity
 {

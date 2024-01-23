@@ -2,7 +2,7 @@ using FluentAssertions;
 using Moq;
 using Moq.Language.Flow;
 using TFA.Domain.Exceptions;
-using TFA.Domain.Identity;
+using TFA.Domain.Authentication;
 using TFA.Domain.UseCases.CreateTopic;
 
 namespace TFA.Domain.Tests
