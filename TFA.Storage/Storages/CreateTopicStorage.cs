@@ -32,11 +32,20 @@ public class CreateTopicStorage : ICreateTopicStorage
         await forumDbContext.Topics.AddAsync(topic, cancellationToken);
         await forumDbContext.SaveChangesAsync(cancellationToken);
 
-
+        return await forumDbContext.Topics
+            .Where(t => t.TopicId == topic.TopicId)
+            .Select(t => new Topic
+            {
+                Id = t.TopicId,
+                Title = t.Title,
+                UserId = t.UserId,
+                ForumId = forumId,
+                CreatedAt = t.CreatedAt
+            }).FirstAsync(cancellationToken);
     }
 
     public Task<bool> ForumExists(Guid forumId, CancellationToken cancellationToken)
     {
-        forumDbContext.Forums.AnyAsync(f => f.ForumId == forumId, cancellationToken);
+        return forumDbContext.Forums.AnyAsync(f => f.ForumId == forumId, cancellationToken);
     }
 }
