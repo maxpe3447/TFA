@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Runtime.InteropServices;
 using TFA.API.Models;
 using TFA.Domain.Authorization;
 using TFA.Domain.Exceptions;
@@ -35,8 +36,8 @@ namespace TFA.API.Controllers
         {
             try
             {
-
-                var topic = await useCase.Execute(forumId, request.Title, cancellationToken);
+                var command = new CreateTopicCommand(forumId, request.Title);
+                var topic = await useCase.Execute(command, cancellationToken);
 
                 return CreatedAtRoute(nameof(GetForums), new Models.Topic
                 {
