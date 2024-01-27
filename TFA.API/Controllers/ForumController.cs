@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using System.Runtime.InteropServices;
 using TFA.API.Models;
 using TFA.Domain.Authorization;
@@ -52,6 +53,7 @@ namespace TFA.API.Controllers
                 {
                     IntentionManagerException => Forbid(),
                     ForumNotFoundException => StatusCode(StatusCodes.Status410Gone),
+                    ValidationException => BadRequest(),
                     _ => StatusCode(StatusCodes.Status500InternalServerError)
                 }; ;
             }
