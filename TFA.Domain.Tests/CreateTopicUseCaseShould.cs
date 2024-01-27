@@ -35,7 +35,7 @@ namespace TFA.Domain.Tests
 
             var validator = new Mock<IValidator<CreateTopicCommand>>();
             validator.Setup(v => v.ValidateAsync(It.IsAny<CreateTopicCommand>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new ValidationResult);
+                .ReturnsAsync(new ValidationResult());
 
             sut = new CreateTopicUseCase(validator.Object, intentionalManager.Object, storage.Object, identityProvider.Object);
         }
