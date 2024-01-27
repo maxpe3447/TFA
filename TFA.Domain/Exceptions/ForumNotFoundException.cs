@@ -1,15 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace TFA.Domain.Exceptions;
 
-namespace TFA.Domain.Exceptions;
-
-public class ForumNotFoundException :Exception
+public class ForumNotFoundException : DomainException
 {
-    public ForumNotFoundException(Guid forumId) : base($"Forum with id {forumId} was not found")
+    public ForumNotFoundException(Guid forumId) : base(ErrorCode.Gone, $"Forum with id {forumId} was not found")
     {
-        
+
+    }
+}
+
+public abstract class DomainException : Exception
+{
+    public ErrorCode ErrorCode { get; set; }
+    public DomainException(ErrorCode errorCode, string message) : base(message)
+    {
+        ErrorCode = errorCode;
     }
 }

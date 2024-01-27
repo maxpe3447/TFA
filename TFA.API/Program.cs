@@ -1,5 +1,6 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using TFA.API.Middlewares;
 using TFA.Domain;
 using TFA.Domain.Authentication;
 using TFA.Domain.Authorization;
@@ -28,9 +29,8 @@ builder.Services.AddValidatorsFromAssemblyContaining<Forum>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-//builder.Services.AddDbContextPool<ForumDbContext>(opt=>opt
 builder.Services.AddDbContext<ForumDbContext>(opt=> opt
-.UseNpgsql(builder.Configuration.GetConnectionString("Postgres"), b=>b.MigrationsAssembly("TFA.API")));
+    .UseNpgsql(builder.Configuration.GetConnectionString("Postgres"), b=>b.MigrationsAssembly("TFA.API")));
 
 var app = builder.Build();
 
@@ -41,5 +41,18 @@ app.UseSwaggerUI();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseMiddleware<ErrorHandlerMiddleware>();
+//using var scope = app.Services.CreateScope();
+//var service = scope.ServiceProvider;
+
+//var context = service.GetRequiredService<ForumDbContext>();
+//bool res = context.Forums.Any();
+//if (!res)
+//{
+//    context.Forums.Add(new TFA.Storage.Entities.Forum { ForumId = Guid.Parse("8f54d8f5-6495-4818-8956-e735867469b9".ToUpper()), Title = "Blog"});
+//    await context.SaveChangesAsync();
+//}
+
 
 app.Run();
