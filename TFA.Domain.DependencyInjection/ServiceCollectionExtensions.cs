@@ -1,6 +1,8 @@
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using TFA.Domain.Authentication;
 using TFA.Domain.Authorization;
+using TFA.Domain.Models;
 using TFA.Domain.UseCases.CreateTopic;
 using TFA.Domain.UseCases.GetForums;
 
@@ -13,6 +15,7 @@ public static class ServiceCollectionExtensions
             .AddScoped<IGetForumsUseCase, GetForumsUseCase>()
             .AddScoped<IIntentionResolver, TopicIntentionalResolver>()
             .AddScoped<IIntentionManager, IntentionManager>()
-            .AddScoped<IIdentityProvider, IdentityProvider>();
+            .AddScoped<IIdentityProvider, IdentityProvider>()
+            .AddValidatorsFromAssemblyContaining<Forum>();
 
 }

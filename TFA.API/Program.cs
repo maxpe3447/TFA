@@ -10,7 +10,7 @@ using TFA.Domain.UseCases.GetForums;
 using TFA.Storage;
 using TFA.Storage.Storages;
 using TFA.Domain.DependencyInjection;
-
+using TFA.Storage.DependencyInjection;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddLogging(b => b.AddSerilog(new LoggerConfiguration()
@@ -27,22 +27,18 @@ builder.Services.AddLogging(b => b.AddSerilog(new LoggerConfiguration()
         .WriteTo.Console())
     .CreateLogger()));
 
-builder.Services.AddForumDomain();
-
 builder.Services
-            .AddScoped<IGetForumsStorage, GetForumStorage>()
-            .AddScoped<ICreateTopicStorage, CreateTopicStorage>();
-builder.Services.AddScoped<IGuidFactory, GuidFactory>();
-builder.Services.AddScoped<IMomentProvider, MomentProvider>();
+    .AddForumDomain()
+    .AddForumStorage(builder.Configuration.GetConnectionString("Postgres"));
+
+builder.Services.AddDbContextPool<ForumDbContext>(opt => opt
+                .UseNpgsql(connectionString, b => b.MigrationsAssembly("TFA.API")));
 
 //builder.Services.AddScoped<IValidator<CreateTopicCommand>, CreateTopicCommandValidator>();
-builder.Services.AddValidatorsFromAssemblyContaining<Forum>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContextPool<ForumDbContext>(opt => opt
-    .UseNpgsql(builder.Configuration.GetConnectionString("Postgres"), b => b.MigrationsAssembly("TFA.API")));
 
 var app = builder.Build();
 
