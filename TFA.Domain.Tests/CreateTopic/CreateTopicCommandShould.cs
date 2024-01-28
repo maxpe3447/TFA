@@ -2,7 +2,7 @@ using FluentAssertions;
 using TFA.Domain.UseCases.CreateTopic;
 using Xunit.Sdk;
 
-namespace TFA.Domain.Tests;
+namespace TFA.Domain.Tests.CreateTopic;
 
 public class CreateTopicCommandShould
 {
@@ -22,8 +22,8 @@ public class CreateTopicCommandShould
         yield return new object[] { validCommand with { ForumId = Guid.Empty }/*, nameof(CreateTopicCommand.ForumId), "Empty" */};
         yield return new object[] { validCommand with { Title = null }/*, nameof(CreateTopicCommand.Title), "Empty" */};
         yield return new object[] { validCommand with { Title = "" }/*, nameof(CreateTopicCommand.Title), "Empty"*/ };
-        yield return new object[] {validCommand with { Title = "      " }/*, nameof(CreateTopicCommand.Title), "Empty"*/ };
-        yield return new object[] {validCommand with { Title = new string('a', 200) }/*, nameof(CreateTopicCommand.Title), "TooLong" */};
+        yield return new object[] { validCommand with { Title = "      " }/*, nameof(CreateTopicCommand.Title), "Empty"*/ };
+        yield return new object[] { validCommand with { Title = new string('a', 200) }/*, nameof(CreateTopicCommand.Title), "TooLong" */};
     }
 
     [Theory]

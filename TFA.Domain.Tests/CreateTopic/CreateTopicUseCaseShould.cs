@@ -8,7 +8,7 @@ using TFA.Domain.Authorization;
 using FluentValidation;
 using FluentValidation.Results;
 
-namespace TFA.Domain.Tests
+namespace TFA.Domain.Tests.CreateTopic
 {
     public class CreateTopicUseCaseShould
     {
@@ -28,7 +28,7 @@ namespace TFA.Domain.Tests
             var identity = new Mock<IIdentity>();
             var identityProvider = new Mock<IIdentityProvider>();
             identityProvider.Setup(s => s.Current).Returns(identity.Object);
-            getCurrentUserIdSetup =  identity.Setup(s => s.UserId);
+            getCurrentUserIdSetup = identity.Setup(s => s.UserId);
 
             intentionalManager = new Mock<IIntentionManager>();
             intentionIsAllowedSetup = intentionalManager.Setup(s => s.IsAllowed(It.IsAny<TopicIntention>()));
@@ -46,10 +46,10 @@ namespace TFA.Domain.Tests
             var forumId = Guid.Parse("86d52a9d-1a3b-4976-8901-9b9936c4e6ec");
 
             intentionIsAllowedSetup.Returns(false);
-            await sut.Invoking(s=>s.Execute(new(forumId, "Whatever"), CancellationToken.None))
+            await sut.Invoking(s => s.Execute(new(forumId, "Whatever"), CancellationToken.None))
                 .Should().ThrowAsync<IntentionManagerException>();
 
-            intentionalManager.Verify(s=>s.IsAllowed(TopicIntention.Create));
+            intentionalManager.Verify(s => s.IsAllowed(TopicIntention.Create));
         }
 
 
