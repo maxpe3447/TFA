@@ -25,8 +25,7 @@ namespace TFA.API.Middlewares
                     DomainException domainException =>
                         problemDetailsFactory.CreateFrom(context, domainException),
 
-                    _ => problemDetailsFactory.CreateProblemDetails(context, StatusCodes.Status500InternalServerError, "Unhandled error! Please contact us.",
-                    detail: e.Message)
+                    _ => problemDetailsFactory.CreateProblemDetails(context, StatusCodes.Status500InternalServerError, "Unhandled error! Please contact us.")
                 };
 
                 context.Response.StatusCode = problemDetails.Status ?? StatusCodes.Status500InternalServerError;

@@ -1,5 +1,8 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
+using Serilog.Filters;
+using System.Runtime.InteropServices;
 using TFA.API.Middlewares;
 using TFA.Domain;
 using TFA.Domain.Authentication;
@@ -11,6 +14,20 @@ using TFA.Storage;
 using TFA.Storage.Storages;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddLogging(b => b.AddSerilog(new LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .Enrich.WithProperty("Application", "TFA.API")
+    .Enrich.WithProperty("Environment", builder.Environment.EnvironmentName)
+    .WriteTo.Logger(lc => lc
+        .Filter.ByExcluding(Matching.FromSource("Microsoft"))
+        .WriteTo.OpenSearch(
+        builder.Configuration.GetConnectionString("Logs"),
+        "forum-logs-{0:yyyy.MM.dd}"))
+    .WriteTo.Logger(lc => lc
+        .Filter.ByExcluding(Matching.FromSource("Microsoft"))
+        .WriteTo.Console())
+    .CreateLogger()));
 
 builder.Services.AddScoped<ICreateTopicUseCase, CreateTopicUseCase>();
 builder.Services.AddScoped<IGetForumsUseCase, GetForumsUseCase>();
@@ -29,7 +46,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<Forum>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<ForumDbContext>(opt=> opt
+builder.Services.AddDbContextPool<ForumDbContext>(opt=> opt
     .UseNpgsql(builder.Configuration.GetConnectionString("Postgres"), b=>b.MigrationsAssembly("TFA.API")));
 
 var app = builder.Build();

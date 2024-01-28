@@ -5,6 +5,7 @@ VisualStudioVersion = 17.9.34407.89
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{054EE3ED-911E-4B2F-A524-91CF9A3335F2}"
 	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -14,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TFA.Domain", "TFA.Domain\TF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TFA.API", "TFA.API\TFA.API.csproj", "{9B6E963B-5885-4711-9BD7-D42481E51700}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Domain.Tests", "TFA.Domain.Tests\TFA.Domain.Tests.csproj", "{1F3DFCB8-8985-4E5B-9B50-686A2560247B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TFA.Domain.Tests", "TFA.Domain.Tests\TFA.Domain.Tests.csproj", "{1F3DFCB8-8985-4E5B-9B50-686A2560247B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
