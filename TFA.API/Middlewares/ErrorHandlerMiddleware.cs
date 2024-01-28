@@ -8,25 +8,46 @@ namespace TFA.API.Middlewares
 {
     public class ErrorHandlerMiddleware(RequestDelegate next)
     {
-        public async Task InvokeAsync(HttpContext context, ProblemDetailsFactory problemDetailsFactory)
+        public async Task InvokeAsync(
+            HttpContext context,
+            ILogger<ErrorHandlerMiddleware> logger,
+            ProblemDetailsFactory problemDetailsFactory)
         {
             try
             {
+                logger.LogError("Error handling started for request in path {RequestPath}", context.Request.Path.Value);
+
                 await next.Invoke(context);
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                var problemDetails = e switch
-                {
-                    IntentionManagerException intentionManagerException =>
-                        problemDetailsFactory.CreateFrom(context, intentionManagerException),
-                    ValidationException validationException =>
-                        problemDetailsFactory.CreateFrom(context, validationException),
-                    DomainException domainException =>
-                        problemDetailsFactory.CreateFrom(context, domainException),
+                logger.LogError(
+                    exception,
+                    "Error has happened with {RequestPath}, the message is {ErrorMessage}",
+                    context.Request.Path.Value, exception.Message);
 
-                    _ => problemDetailsFactory.CreateProblemDetails(context, StatusCodes.Status500InternalServerError, "Unhandled error! Please contact us.")
-                };
+                ProblemDetails problemDetails;
+
+                switch (exception)
+                {
+                    case IntentionManagerException intentionManagerException:
+                        problemDetails = problemDetailsFactory.CreateFrom(context, intentionManagerException);
+                        break;
+                    case ValidationException validationException:
+                        problemDetails = problemDetailsFactory.CreateFrom(context, validationException);
+                        logger.LogInformation(validationException, "Somebody sent invalid request, oops");
+                        break;
+                    case DomainException domainException:
+                        problemDetails = problemDetailsFactory.CreateFrom(context, domainException);
+                        logger.LogError(domainException, "Domain exception occurred");
+                        break;
+                    default:
+                        problemDetails = problemDetailsFactory.CreateProblemDetails(
+                            context, StatusCodes.Status500InternalServerError, "Unhandled error! Please contact us.");
+                        logger.LogError(exception, "Unhandled exception occurred");
+                        break;
+                }
+
 
                 context.Response.StatusCode = problemDetails.Status ?? StatusCodes.Status500InternalServerError;
                 context.Response.WriteAsJsonAsync(problemDetails, problemDetails.GetType());
