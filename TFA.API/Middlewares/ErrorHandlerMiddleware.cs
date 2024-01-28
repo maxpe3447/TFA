@@ -50,7 +50,7 @@ namespace TFA.API.Middlewares
 
 
                 context.Response.StatusCode = problemDetails.Status ?? StatusCodes.Status500InternalServerError;
-                context.Response.WriteAsJsonAsync(problemDetails, problemDetails.GetType());
+                await context.Response.WriteAsJsonAsync(problemDetails, problemDetails.GetType());
             }
         }
     }

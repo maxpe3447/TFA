@@ -22,7 +22,7 @@ public static class ServiceCollectionExtensions
             .AddScoped<IIdentityProvider, IdentityProvider>();
 
         services
-            .AddValidatorsFromAssemblyContaining<Forum>();
+            .AddValidatorsFromAssemblyContaining<Forum>(includeInternalTypes: true);
         //builder.Services.AddScoped<IValidator<CreateTopicCommand>, CreateTopicCommandValidator>();
 
         return services;
