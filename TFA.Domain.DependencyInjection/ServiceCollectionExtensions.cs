@@ -10,12 +10,21 @@ namespace TFA.Domain.DependencyInjection;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddForumDomain(this IServiceCollection services) => services
-            .AddScoped<ICreateTopicUseCase, CreateTopicUseCase>()
+    public static IServiceCollection AddForumDomain(this IServiceCollection services)
+    {
+        services
             .AddScoped<IGetForumsUseCase, GetForumsUseCase>()
-            .AddScoped<IIntentionResolver, TopicIntentionalResolver>()
-            .AddScoped<IIntentionManager, IntentionManager>()
-            .AddScoped<IIdentityProvider, IdentityProvider>()
-            .AddValidatorsFromAssemblyContaining<Forum>();
+            .AddScoped<ICreateTopicUseCase, CreateTopicUseCase>()
+            .AddScoped<IIntentionResolver, TopicIntentionalResolver>();
 
+        services
+            .AddScoped<IIntentionManager, IntentionManager>()
+            .AddScoped<IIdentityProvider, IdentityProvider>();
+
+        services
+            .AddValidatorsFromAssemblyContaining<Forum>();
+        //builder.Services.AddScoped<IValidator<CreateTopicCommand>, CreateTopicCommandValidator>();
+
+        return services;
+    }
 }
