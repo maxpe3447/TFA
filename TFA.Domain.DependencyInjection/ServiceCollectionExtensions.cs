@@ -27,6 +27,8 @@ public static class ServiceCollectionExtensions
             .AddValidatorsFromAssemblyContaining<Forum>(includeInternalTypes: true);
         //builder.Services.AddScoped<IValidator<CreateTopicCommand>, CreateTopicCommandValidator>();
 
+        services
+            .AddMemoryCache();
         return services;
     }
 }
