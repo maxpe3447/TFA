@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using TFA.Domain;
 using TFA.Domain.Models;
 using TFA.Domain.UseCases.CreateTopic;
@@ -42,10 +43,5 @@ internal class CreateTopicStorage : ICreateTopicStorage
                 ForumId = forumId,
                 CreatedAt = t.CreatedAt
             }).FirstAsync(cancellationToken);
-    }
-
-    public Task<bool> ForumExists(Guid forumId, CancellationToken cancellationToken)
-    {
-        return forumDbContext.Forums.AnyAsync(f => f.ForumId == forumId, cancellationToken);
     }
 }
