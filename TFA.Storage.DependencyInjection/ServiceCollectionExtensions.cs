@@ -4,6 +4,7 @@ using TFA.Domain.UseCases.GetForums;
 using TFA.Domain;
 using TFA.Storage.Storages;
 using Microsoft.EntityFrameworkCore;
+using TFA.Domain.UseCases.GetTopics;
 
 namespace TFA.Storage.DependencyInjection;
 
@@ -14,6 +15,7 @@ public static class ServiceCollectionExtensions
         return services
             .AddScoped<IGetForumsStorage, GetForumStorage>()
             .AddScoped<ICreateTopicStorage, CreateTopicStorage>()
+            .AddScoped<IGetTopicsStorage, GetTopicsStorage>()
             .AddScoped<IGuidFactory, GuidFactory>()
             .AddScoped<IMomentProvider, MomentProvider>()
             .AddDbContextPool<ForumDbContext>(opt => opt
