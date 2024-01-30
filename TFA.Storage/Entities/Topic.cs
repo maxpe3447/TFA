@@ -12,6 +12,7 @@ public class Topic
     public DateTimeOffset UpdatedAt { get; set; }
     public Guid ForumId { get; set; }
     public Guid UserId { get; set; }
+    [MaxLength(100)]
     public string Title { get; set; }
     [ForeignKey(nameof(UserId))]
     public User Author { get; set; }

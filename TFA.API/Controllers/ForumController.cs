@@ -51,8 +51,13 @@ public class ForumController : ControllerBase
         [FromServices] IGetTopicsUseCase useCase,
         CancellationToken cancellationToken)
     {
-        var (sources, totalCount) = await useCase.Execute(new GetTopicsQuery(forumId, skip, take), cancellationToken);
+        var (resources, totalCount) = await useCase.Execute(new GetTopicsQuery(forumId, skip, take), cancellationToken);
 
-        return Ok(new {sources, totalCount});
+        return Ok(new { resuorces = resources.Select(r => new Topic
+        {
+            Id = r.Id,
+            Title = r.Title,
+            CreatedAt = r.CreatedAt,
+        }), totalCount});
     }
 }

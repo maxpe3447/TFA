@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TFA.Storage;
@@ -11,9 +12,11 @@ using TFA.Storage;
 namespace TFA.API.Migrations
 {
     [DbContext(typeof(ForumDbContext))]
-    partial class ForumDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240130223346_TopicTitleConstraint")]
+    partial class TopicTitleConstraint
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,8 +85,7 @@ namespace TFA.API.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("text");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
