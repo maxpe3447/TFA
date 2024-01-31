@@ -15,8 +15,6 @@ namespace TFA.API.Middlewares
         {
             try
             {
-                logger.LogError("Error handling started for request in path {RequestPath}", context.Request.Path.Value);
-
                 await next.Invoke(context);
             }
             catch (Exception exception)
