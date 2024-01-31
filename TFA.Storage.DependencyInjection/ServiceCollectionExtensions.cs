@@ -6,6 +6,7 @@ using TFA.Storage.Storages;
 using Microsoft.EntityFrameworkCore;
 using TFA.Domain.UseCases.GetTopics;
 using TFA.Domain.UseCases.CreateForum;
+using System.Reflection;
 
 namespace TFA.Storage.DependencyInjection;
 
@@ -25,6 +26,9 @@ public static class ServiceCollectionExtensions
 
         services
             .AddMemoryCache();
+
+        services
+            .AddAutoMapper(config => config.AddMaps(Assembly.GetAssembly(typeof(ForumDbContext))));
         return services;
     }
 }

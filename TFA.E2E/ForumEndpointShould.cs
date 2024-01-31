@@ -1,13 +1,11 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.Testing;
 using System.Net.Http.Json;
 using TFA.API.Models;
 
 namespace TFA.E2E;
 
-public class ForumEndpointShould:IClassFixture<ForumApiApplicationFactory>
+public class ForumEndpointShould : IClassFixture<ForumApiApplicationFactory>
 {
     private readonly WebApplicationFactory<Program> factory;
 
@@ -26,8 +24,8 @@ public class ForumEndpointShould:IClassFixture<ForumApiApplicationFactory>
             .Should().NotBeNull().And
             .Subject.As<Forum[]>().Should().BeEmpty();
 
-        using var response = await httpClient.PostAsync("forums", 
-            JsonContent.Create(new {title = "Test"}));
+        using var response = await httpClient.PostAsync("forums",
+            JsonContent.Create(new { title = "Test" }));
 
         response.Invoking(r => r.EnsureSuccessStatusCode()).Should().NotThrow();
 
@@ -37,11 +35,13 @@ public class ForumEndpointShould:IClassFixture<ForumApiApplicationFactory>
             .Should().NotBeNull().And
             .Subject.As<Forum>().Title.Should().Be("Test");
 
+        forum?.Id.Should().NotBeEmpty();
+
         using var getForumsResponse = await httpClient.GetAsync("forums");
         var forums = await getForumsResponse.Content.ReadFromJsonAsync<Forum[]>();
         forums
             .Should().NotBeNull().And
-            .Subject.As<Forum[]>().Should().Contain(f=>f.Title == "Test");
+            .Subject.As<Forum[]>().Should().Contain(f => f.Title == "Test");
     }
 
     //[Fact]
