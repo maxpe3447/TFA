@@ -8,7 +8,7 @@ using TFA.Storage;
 
 #nullable disable
 
-namespace TFA.API.Migrations
+namespace TFA.Storage.Migrations
 {
     [DbContext(typeof(ForumDbContext))]
     partial class ForumDbContextModelSnapshot : ModelSnapshot
@@ -61,7 +61,8 @@ namespace TFA.API.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.HasKey("ForumId");
 

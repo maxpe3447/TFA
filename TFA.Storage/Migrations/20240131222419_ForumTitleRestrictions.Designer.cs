@@ -9,11 +9,11 @@ using TFA.Storage;
 
 #nullable disable
 
-namespace TFA.API.Migrations
+namespace TFA.Storage.Migrations
 {
     [DbContext(typeof(ForumDbContext))]
-    [Migration("20240127215547_Update storage assembly")]
-    partial class Updatestorageassembly
+    [Migration("20240131222419_ForumTitleRestrictions")]
+    partial class ForumTitleRestrictions
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -64,7 +64,8 @@ namespace TFA.API.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.HasKey("ForumId");
 
@@ -85,7 +86,8 @@ namespace TFA.API.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");

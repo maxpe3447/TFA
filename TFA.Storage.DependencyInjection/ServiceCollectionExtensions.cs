@@ -22,7 +22,7 @@ public static class ServiceCollectionExtensions
             .AddScoped<IGuidFactory, GuidFactory>()
             .AddScoped<IMomentProvider, MomentProvider>()
             .AddDbContextPool<ForumDbContext>(opt => opt
-                .UseNpgsql(connectionString, b => b.MigrationsAssembly("TFA.API")));
+                .UseNpgsql(connectionString, b => b.MigrationsAssembly("TFA.Storage")));
 
         services
             .AddMemoryCache();
