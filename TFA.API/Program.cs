@@ -52,3 +52,6 @@ app.UseMiddleware<ErrorHandlerMiddleware>();
 
 
 app.Run();
+
+
+public partial class Program { }

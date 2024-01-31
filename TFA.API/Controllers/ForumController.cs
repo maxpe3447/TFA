@@ -23,9 +23,8 @@ public class ForumController : ControllerBase
     }
     [HttpPost("{forumId}/topics")]
     [ProducesResponseType(400)]
-    [ProducesResponseType(403)]
     [ProducesResponseType(410)]
-    [ProducesResponseType(201, Type = typeof(Models.Topic))]
+    [ProducesResponseType(200)]
     public async Task<IActionResult> CreateTopic(
         Guid forumId,
         [FromBody] CreateTopic request,
