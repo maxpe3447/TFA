@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TFA.API.Models;
+using TFA.Domain.UseCases.CreateForum;
 using TFA.Domain.UseCases.CreateTopic;
 using TFA.Domain.UseCases.GetForums;
 using TFA.Domain.UseCases.GetTopics;
@@ -10,6 +11,23 @@ namespace TFA.API.Controllers;
 [Route("forums")]
 public class ForumController : ControllerBase
 {
+
+    [HttpPost]
+    public async Task<ActionResult> CreateForum(
+        [FromBody] CreateForum request,
+        [FromServices] ICreateForumUseCase useCase,
+        CancellationToken cancellationToken)
+    {
+        var command = new CreateForumCommand(request.Title);
+        var forum = await useCase.Execute(command, cancellationToken);
+
+        return CreatedAtRoute(nameof(GetForums), new Forum
+        {
+            Id = forum.Id,
+            Title = forum.Title,
+        });
+    }
+
     [HttpGet(Name = nameof(GetForums))]
     [ProducesResponseType(200, Type = typeof(Models.Forum[]))]
     public async Task<IActionResult> GetForums([FromServices] IGetForumsUseCase useCase, CancellationToken cancellationToken)
