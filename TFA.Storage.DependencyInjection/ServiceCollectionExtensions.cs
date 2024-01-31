@@ -12,7 +12,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddForumStorage(this IServiceCollection services, string connectionString)
     {
-        return services
+        services
             .AddScoped<IGetForumsStorage, GetForumStorage>()
             .AddScoped<ICreateTopicStorage, CreateTopicStorage>()
             .AddScoped<IGetTopicsStorage, GetTopicsStorage>()
@@ -21,5 +21,8 @@ public static class ServiceCollectionExtensions
             .AddDbContextPool<ForumDbContext>(opt => opt
                 .UseNpgsql(connectionString, b => b.MigrationsAssembly("TFA.API")));
 
+        services
+            .AddMemoryCache();
+        return services;
     }
 }
