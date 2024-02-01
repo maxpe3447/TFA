@@ -16,16 +16,18 @@ public class ForumEndpointShould : IClassFixture<ForumApiApplicationFactory>
     [Fact]
     public async Task CreateNewForum()
     {
+        const string forumTitle = "20454951-e85a-4215-9a3a-dc923da29ee3";
+
         using var httpClient = factory.CreateClient();
 
         using var getInitialForumsResponse = await httpClient.GetAsync("forums");
         var initialForums = await getInitialForumsResponse.Content.ReadFromJsonAsync<Forum[]>();
         initialForums
             .Should().NotBeNull().And
-            .Subject.As<Forum[]>().Should().BeEmpty();
+            .Subject.As<Forum[]>().Should().NotContain(f=>f.Title.Equals(forumTitle));
 
         using var response = await httpClient.PostAsync("forums",
-            JsonContent.Create(new { title = "Test" }));
+            JsonContent.Create(new { title = forumTitle }));
 
         response.Invoking(r => r.EnsureSuccessStatusCode()).Should().NotThrow();
 
@@ -33,7 +35,7 @@ public class ForumEndpointShould : IClassFixture<ForumApiApplicationFactory>
 
         forum
             .Should().NotBeNull().And
-            .Subject.As<Forum>().Title.Should().Be("Test");
+            .Subject.As<Forum>().Title.Should().Be(forumTitle);
 
         forum?.Id.Should().NotBeEmpty();
 
@@ -41,7 +43,7 @@ public class ForumEndpointShould : IClassFixture<ForumApiApplicationFactory>
         var forums = await getForumsResponse.Content.ReadFromJsonAsync<Forum[]>();
         forums
             .Should().NotBeNull().And
-            .Subject.As<Forum[]>().Should().Contain(f => f.Title == "Test");
+            .Subject.As<Forum[]>().Should().Contain(f => f.Title.Equals(forumTitle));
     }
 
     //[Fact]
