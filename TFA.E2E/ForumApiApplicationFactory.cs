@@ -15,7 +15,7 @@ public class ForumApiApplicationFactory : WebApplicationFactory<Program>, IAsync
     {
         await _container.StartAsync();
         var forumDbContext = new ForumDbContext(new DbContextOptionsBuilder<ForumDbContext>()
-            .UseNpgsql(_container.GetConnectionString(), b => b.MigrationsAssembly("TFA.API")).Options);
+            .UseNpgsql(_container.GetConnectionString(), b => b.MigrationsAssembly("TFA.Storage")).Options);
         await forumDbContext.Database.MigrateAsync();
     }
 
