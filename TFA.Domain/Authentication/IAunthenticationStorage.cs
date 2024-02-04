@@ -1,3 +1,5 @@
+using TFA.Domain.UseCases.SignIn;
+
 namespace TFA.Domain.Authentication;
 
 public interface IAunthenticationStorage

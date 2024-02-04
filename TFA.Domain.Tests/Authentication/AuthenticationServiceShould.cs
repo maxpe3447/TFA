@@ -4,6 +4,7 @@ using Moq;
 using Moq.Language.Flow;
 using System.Runtime.CompilerServices;
 using TFA.Domain.Authentication;
+using TFA.Domain.UseCases.SignIn;
 using TFA.Storage.Entities;
 using TFA.Storage.Storages;
 namespace TFA.Domain.Tests.Authentication;
@@ -20,7 +21,7 @@ public class AuthenticationServiceShould
         storage = new Mock<IAunthenticationStorage>();
         findUserSetup = storage.Setup(s => s.FindUser(It.IsAny<string>(), It.IsAny<CancellationToken>()));
 
-        var securityManager = new Mock<ISecurityManager>();
+        var securityManager = new Mock<IPasswordManager>();
         securityManager
             .Setup(m => m.ComparePasswords(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
             .Returns(true);
@@ -70,7 +71,7 @@ public class AuthenticationServiceShould
     {
         var password = "qwerty";
 
-        var securityManager = new SecurityManager();
+        var securityManager = new PasswordManager();
         var(salt, hash) = securityManager.GeneratePasswordParts(password);
 
         findUserSetup.ReturnsAsync(new RecognisedUser()
@@ -80,7 +81,7 @@ public class AuthenticationServiceShould
             PasswordHash = hash
         });
 
-        var localSut = new AuthenticationService(storage.Object, new SecurityManager(), options.Object);
+        var localSut = new AuthenticationService(storage.Object, new PasswordManager(), options.Object);
         var (success, _) = await localSut.SignIn(new BasicSignInCredentials("User", password), CancellationToken.None);
         success.Should().BeTrue();
     }

@@ -2,6 +2,6 @@ namespace TFA.Domain.Authentication;
 
 public class AuthenticationConfiguration
 {
-    public string Key { get; set; }
-    public string Iv { get; set; }
+    public string Base64Key { get; set; }
+    public byte[] Key => Convert.FromBase64String(Base64Key);
 }
