@@ -2,5 +2,5 @@
 
 internal interface ISymmetricDecryptor
 {
-    Task<string> Decryptor(string encrypted, byte[] key, CancellationToken token);
+    Task<string> Decrypt(string encrypted, byte[] key, CancellationToken token);
 }

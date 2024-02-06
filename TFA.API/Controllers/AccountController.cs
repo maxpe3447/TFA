@@ -30,7 +30,7 @@ public class AccountController :ControllerBase
         var (identity, token)= await signInUseCase.Execute(
             new(request.Login, request.Password), cancellationToken);
 
-        tokenStorage.Store(context, token);
+        tokenStorage.Store(HttpContext, token);
 
         return Ok(identity);
     }

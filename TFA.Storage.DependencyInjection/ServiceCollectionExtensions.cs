@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using TFA.Domain.UseCases.GetTopics;
 using TFA.Domain.UseCases.CreateForum;
 using System.Reflection;
+using TFA.Domain.UseCases.SignOn;
+using TFA.Domain.UseCases.SignIn;
 
 namespace TFA.Storage.DependencyInjection;
 
@@ -19,6 +21,8 @@ public static class ServiceCollectionExtensions
             .AddScoped<IGetForumsStorage, GetForumStorage>()
             .AddScoped<ICreateTopicStorage, CreateTopicStorage>()
             .AddScoped<IGetTopicsStorage, GetTopicsStorage>()
+            .AddScoped<ISignOnStorage, SignOnStorage>()
+            .AddScoped<ISignInStorage, SignInStorage>()
             .AddScoped<IGuidFactory, GuidFactory>()
             .AddScoped<IMomentProvider, MomentProvider>()
             .AddDbContextPool<ForumDbContext>(opt => opt

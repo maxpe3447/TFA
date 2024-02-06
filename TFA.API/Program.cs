@@ -1,12 +1,16 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using TFA.API.DependencyInjection;
+using TFA.API.IAuthentication;
 using TFA.API.Middlewares;
+using TFA.Domain.Authentication;
 using TFA.Domain.DependencyInjection;
 using TFA.Storage.DependencyInjection;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApiLogging(builder.Configuration, builder.Environment);
+builder.Services.Configure<AuthenticationConfiguration>(builder.Configuration.GetSection("Authentication").Bind);
+builder.Services.AddScoped<IAuthTokenStorage, AuthTokenStorage>();
 
 builder.Services
     .AddForumDomain()

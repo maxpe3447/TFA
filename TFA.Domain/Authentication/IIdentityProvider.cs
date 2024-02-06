@@ -2,10 +2,10 @@
 
 public interface IIdentityProvider
 {
-    IIdentity Current { get; }
+    IIdentity Current { get; set; }
 }
 
-public interface IIdentitySetter
-{
-    IIdentity Current { set; }
-}
+//public interface IIdentitySetter
+//{
+//    IIdentity Current { set; }
+//}

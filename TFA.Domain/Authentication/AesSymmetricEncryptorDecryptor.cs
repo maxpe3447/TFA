@@ -3,11 +3,11 @@ using System.Text;
 
 namespace TFA.Domain.Authentication;
 
-internal class AesSymmetricDecryptor : ISymmetricDecryptor, ISymmetricEncryptor
+internal class AesSymmetricEncryptorDecryptor : ISymmetricDecryptor, ISymmetricEncryptor
 {
     private const int IvSize = 16;
     private readonly Lazy<Aes> aes = new (Aes.Create);
-    public async Task<string> Decryptor(string encryptedText, byte[] key, CancellationToken cancellationToken)
+    public async Task<string> Decrypt(string encryptedText, byte[] key, CancellationToken cancellationToken)
     {
         var encryptedBytes = Convert.FromBase64String(encryptedText);
         var iv = new byte[IvSize];

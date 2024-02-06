@@ -18,4 +18,19 @@ public class PasswordManagerShould
         salt.Should().NotBeEmpty().And.HaveCount(100).And.NotBeEquivalentTo(emptySalt);
         hash.Should().HaveCount(32).And.NotBeEquivalentTo(emptyHash);
     }
+
+    [Fact]
+    public void ReturnTruPWhenPasswordMatch()
+    {
+        var password = "qwerty123";
+        var (salt, hash) = sut.GeneratePasswordParts(password);
+        sut.ComparePasswords(password, salt, hash).Should().BeTrue();
+    }
+
+    [Fact]
+    public void ReturnFalse_WhenPasswordDoesntMatch()
+    {
+        var (salt, hash) = sut.GeneratePasswordParts("qwerty123");
+        sut.ComparePasswords("p@s$w0rd", salt, hash).Should().BeFalse();
+    }
 }

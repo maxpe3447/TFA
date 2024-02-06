@@ -5,8 +5,18 @@ public interface IIdentity
     Guid UserId { get; }
 }
 
-public class User(Guid guid) : IIdentity
+public class User : IIdentity
 {
+    private readonly Guid guid;
+
+    public User(Guid guid)
+    {
+        this.guid = guid;
+    }
+    public User()
+    {
+        
+    }
     public Guid UserId => guid;
     public static User Guest => new(Guid.Empty);
 }

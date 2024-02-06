@@ -1,12 +1,11 @@
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using TFA.Domain.Authentication;
 using TFA.Domain.UseCases.SignIn;
 
 namespace TFA.Storage.Storages;
 
-internal class SignInStorage : IAunthenticationStorage
+internal class SignInStorage : ISignInStorage
 {
     private readonly ForumDbContext dbContext;
     private readonly IMapper mapper;
@@ -23,6 +22,6 @@ internal class SignInStorage : IAunthenticationStorage
         return dbContext.Users
             .Where(u => u.Login.Equals(login))
             .ProjectTo<RecognisedUser>(mapper.ConfigurationProvider)
-            .FirstOrDefaultAsync(cancellationToken) ;
+            .FirstOrDefaultAsync(cancellationToken);
     }
 }
