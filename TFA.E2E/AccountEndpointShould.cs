@@ -1,16 +1,20 @@
 using FluentAssertions;
 using System.Net.Http.Json;
 using TFA.Domain.Authentication;
+using Xunit.Abstractions;
 
 namespace TFA.E2E;
 
 public class AccountEndpointShould :IClassFixture<ForumApiApplicationFactory>
 {
     private readonly ForumApiApplicationFactory factory;
+    private readonly ITestOutputHelper testOutputHelper;
 
-    public AccountEndpointShould(ForumApiApplicationFactory factory)
+    public AccountEndpointShould(ForumApiApplicationFactory factory,
+                                 ITestOutputHelper testOutputHelper)
     {
         this.factory = factory;
+        this.testOutputHelper = testOutputHelper;
     }
 
     [Fact]
@@ -29,6 +33,9 @@ public class AccountEndpointShould :IClassFixture<ForumApiApplicationFactory>
 
         signInResponse.IsSuccessStatusCode.Should().BeTrue();
         signInResponse.Headers.Should().ContainKey("TFA-Auth-Token");
+
+        testOutputHelper.WriteLine(string.Join(Environment.NewLine, 
+            signInResponse.Headers.Select(h=>$"{h.Key} = {string.Join(" ,", h.Value)}")));
         var signedUser = await signInResponse.Content.ReadFromJsonAsync<User>();
         signedUser.Should()
             .NotBeNull().And
