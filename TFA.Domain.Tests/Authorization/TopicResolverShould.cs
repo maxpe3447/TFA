@@ -5,9 +5,9 @@ using Moq;
 using TFA.Domain.Authentication;
 using TFA.Domain.UseCases.CreateTopic;
 
-namespace TFA.Domain.Tests.CreateTopic;
+namespace TFA.Domain.Tests.Authorization;
 
-public class CreateTopicResolverShould
+public class TopicResolverShould
 {
     private readonly TopicIntentionalResolver sut = new();
     [Fact]
