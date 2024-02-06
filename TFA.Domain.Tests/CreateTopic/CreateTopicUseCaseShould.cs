@@ -66,8 +66,9 @@ namespace TFA.Domain.Tests.CreateTopic
             intentionIsAllowedSetup.Returns(true);
             getForumsSetUp.ReturnsAsync(Array.Empty<Forum>());
 
-            await sut.Invoking(s => s.Execute(new(forumId, "Some Title"), CancellationToken.None))
-                .Should().ThrowAsync<ForumNotFoundException>();
+            (await sut.Invoking(s => s.Execute(new(forumId, "Some Title"), CancellationToken.None))
+                .Should().ThrowAsync<ForumNotFoundException>())
+                .Which.DomainErrorCode.Should().Be(DomainErrorCode.Gone);
         }
 
         [Fact]
