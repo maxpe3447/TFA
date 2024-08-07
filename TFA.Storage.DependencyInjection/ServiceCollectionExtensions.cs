@@ -1,14 +1,15 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
+using TFA.Domain.Authentication;
+using TFA.Domain.UseCases.CreateForum;
 using TFA.Domain.UseCases.CreateTopic;
 using TFA.Domain.UseCases.GetForums;
-using TFA.Domain;
-using TFA.Storage.Storages;
-using Microsoft.EntityFrameworkCore;
 using TFA.Domain.UseCases.GetTopics;
-using TFA.Domain.UseCases.CreateForum;
-using System.Reflection;
-using TFA.Domain.UseCases.SignOn;
 using TFA.Domain.UseCases.SignIn;
+using TFA.Domain.UseCases.SignOn;
+using TFA.Domain.UseCases.SignOut;
+using TFA.Storage.Storages;
 
 namespace TFA.Storage.DependencyInjection;
 
@@ -23,10 +24,12 @@ public static class ServiceCollectionExtensions
             .AddScoped<IGetTopicsStorage, GetTopicsStorage>()
             .AddScoped<ISignOnStorage, SignOnStorage>()
             .AddScoped<ISignInStorage, SignInStorage>()
+            .AddScoped<ISignOutStorage, SignOutStorage>()
+            .AddScoped<IAuthenticationStorage, AuthenticationStorage>()
             .AddScoped<IGuidFactory, GuidFactory>()
             .AddScoped<IMomentProvider, MomentProvider>()
             .AddDbContextPool<ForumDbContext>(opt => opt
-                .UseNpgsql(connectionString, b => b.MigrationsAssembly("TFA.Storage")));
+                .UseNpgsql(connectionString));
 
         services
             .AddMemoryCache();

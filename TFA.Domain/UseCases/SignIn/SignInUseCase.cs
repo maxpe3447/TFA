@@ -1,14 +1,11 @@
 using FluentValidation;
+using MediatR;
 using Microsoft.Extensions.Options;
 using TFA.Domain.Authentication;
 
 namespace TFA.Domain.UseCases.SignIn;
 
-public interface ISignInUseCase
-{
-    Task<(IIdentity identity, string token)> Execute(SignInCommand command, CancellationToken cancellationToken);
-}
-internal class SignInUseCase : ISignInUseCase
+internal class SignInUseCase : IRequestHandler<SignInCommand, (IIdentity identity, string token)>
 {
     private readonly IValidator<SignInCommand> validator;
     private readonly ISignInStorage storage;
@@ -19,9 +16,9 @@ internal class SignInUseCase : ISignInUseCase
     public SignInUseCase(
         IValidator<SignInCommand> validator,
         ISignInStorage storage,
-        IPasswordManager passwordManager, 
+        IPasswordManager passwordManager,
         ISymmetricEncryptor symmetricEncryptor,
-        IOptions<AuthenticationConfiguration> options) 
+        IOptions<AuthenticationConfiguration> options)
     {
         this.validator = validator;
         this.storage = storage;
@@ -30,13 +27,13 @@ internal class SignInUseCase : ISignInUseCase
         configuration = options.Value;
     }
 
-    public async Task<(IIdentity identity, string token)> Execute(
+    public async Task<(IIdentity identity, string token)> Handle(
         SignInCommand command, CancellationToken cancellationToken)
     {
         await validator.ValidateAndThrowAsync(command, cancellationToken);
 
         var recognisedUser = await storage.FindUser(command.Login, cancellationToken);
-        if(recognisedUser is null) 
+        if (recognisedUser is null)
         {
             throw new Exception();
         }
@@ -47,9 +44,11 @@ internal class SignInUseCase : ISignInUseCase
             throw new Exception();
         }
 
+        var sessionId = await storage.CreateSession(
+            recognisedUser.UserId, DateTimeOffset.UtcNow + TimeSpan.FromHours(1), cancellationToken);
         var token = await symmetricEncryptor.Encrypt(
-            recognisedUser.UserId.ToString(), configuration.Key, cancellationToken);
+            sessionId.ToString(), configuration.Key, cancellationToken);
 
-        return (new User(recognisedUser.UserId), token);
+        return (new User(recognisedUser.UserId, sessionId), token);
     }
 }

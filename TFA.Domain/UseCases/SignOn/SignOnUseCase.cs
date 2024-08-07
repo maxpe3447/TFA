@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
-using System.Runtime.Serialization;
+using MediatR;
 using TFA.Domain.Authentication;
 
 namespace TFA.Domain.UseCases.SignOn;
 
-internal class SignOnUseCase : ISignOnUseCase
+internal class SignOnUseCase : IRequestHandler<SignOnCommand, IIdentity>
 {
     private readonly IValidator<SignOnCommand> validator;
     private readonly IPasswordManager passwordManager;
@@ -19,13 +19,13 @@ internal class SignOnUseCase : ISignOnUseCase
         this.passwordManager = passwordManager;
         this.signOnStorage = signOnStorage;
     }
-    public async Task<IIdentity> Execute(SignOnCommand command, CancellationToken cancellationToken)
+    public async Task<IIdentity> Handle(SignOnCommand command, CancellationToken cancellationToken)
     {
         await validator.ValidateAndThrowAsync(command, cancellationToken);
 
         var (salt, hash) = passwordManager.GeneratePasswordParts(command.Password);
         var userId = await signOnStorage.CreateUser(command.Login, salt, hash, cancellationToken);
 
-        return new User(userId);
+        return new User(userId, Guid.Empty);
     }
 }

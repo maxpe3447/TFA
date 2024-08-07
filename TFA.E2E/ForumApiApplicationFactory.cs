@@ -1,7 +1,10 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
+using System.Reflection;
 using System.Security.Cryptography;
 using Testcontainers.PostgreSql;
 using TFA.Storage;

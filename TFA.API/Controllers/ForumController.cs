@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TFA.API.Models;
 using TFA.Domain.UseCases.CreateForum;
@@ -12,6 +13,12 @@ namespace TFA.API.Controllers;
 [Route("forums")]
 public class ForumController : ControllerBase
 {
+    private readonly IMediator mediator;
+
+    public ForumController(IMediator mediator)
+    {
+        this.mediator = mediator;
+    }
 
     [HttpPost]
     [ProducesResponseType(400)]
@@ -19,12 +26,11 @@ public class ForumController : ControllerBase
     [ProducesResponseType(201, Type = typeof(Forum))]
     public async Task<ActionResult> CreateForum(
         [FromBody] CreateForum request,
-        [FromServices] ICreateForumUseCase useCase,
         [FromServices] IMapper mapper,
         CancellationToken cancellationToken)
     {
         var command = new CreateForumCommand(request.Title);
-        var forum = await useCase.Execute(command, cancellationToken);
+        var forum = await mediator.Send(command, cancellationToken);
 
         return CreatedAtRoute(nameof(GetForums), mapper.Map<Forum>(forum));
     }
@@ -33,11 +39,10 @@ public class ForumController : ControllerBase
     [ProducesResponseType(200, Type = typeof(
         Forum[]))]
     public async Task<IActionResult> GetForums(
-        [FromServices] IGetForumsUseCase useCase,
         [FromServices] IMapper mapper,
         CancellationToken cancellationToken)
     {
-        var forums = await useCase.Execute(cancellationToken);
+        var forums = await mediator.Send(new GetForumQuery(), cancellationToken);
         return Ok(forums.Select(mapper.Map<Forum>));
     }
     [HttpPost("{forumId}/topics")]
@@ -48,12 +53,11 @@ public class ForumController : ControllerBase
     public async Task<IActionResult> CreateTopic(
         Guid forumId,
         [FromBody] CreateTopic request,
-        [FromServices] ICreateTopicUseCase useCase,
         [FromServices] IMapper mapper,
         CancellationToken cancellationToken)
     {
         var command = new CreateTopicCommand(forumId, request.Title);
-        var topic = await useCase.Execute(command, cancellationToken);
+        var topic = await mediator.Send(command, cancellationToken);
 
         return CreatedAtRoute(nameof(GetForums), mapper.Map<Topic>(topic));
     }
@@ -63,11 +67,10 @@ public class ForumController : ControllerBase
         [FromRoute] Guid forumId,
         [FromQuery] int skip,
         [FromQuery] int take,
-        [FromServices] IGetTopicsUseCase useCase,
         [FromServices] IMapper mapper,
         CancellationToken cancellationToken)
     {
-        var (resources, totalCount) = await useCase.Execute(new GetTopicsQuery(forumId, skip, take), cancellationToken);
+        var (resources, totalCount) = await mediator.Send(new GetTopicsQuery(forumId, skip, take), cancellationToken);
 
         return Ok(new
         {

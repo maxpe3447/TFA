@@ -27,7 +27,7 @@ public class TopicResolverShould
     public void ReturnTrue_WhenCheckingTopicCreateIntention_AndUserIsAuthenticated()
     {
         sut.IsAllowed(
-            new User(Guid.Parse("20811a77-5b86-4e99-a0d1-6a4819b78721")),
+            new User(Guid.Parse("20811a77-5b86-4e99-a0d1-6a4819b78721"), Guid.Empty),
             TopicIntention.Create)
             .Should().BeTrue();
     }

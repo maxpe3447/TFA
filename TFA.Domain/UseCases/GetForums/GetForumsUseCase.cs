@@ -1,7 +1,9 @@
-﻿using TFA.Domain.Models;
+﻿using MediatR;
+using TFA.Domain.Models;
+using TFA.Domain.Monitoring;
 namespace TFA.Domain.UseCases.GetForums;
 
-internal class GetForumsUseCase : IGetForumsUseCase
+internal class GetForumsUseCase : IRequestHandler<GetForumQuery, IEnumerable<Forum>>
 {
     private readonly IGetForumsStorage getForumsStorage;
 
@@ -10,6 +12,8 @@ internal class GetForumsUseCase : IGetForumsUseCase
     {
         this.getForumsStorage = getForumsStorage;
     }
-    public Task<IEnumerable<Forum>> Execute(CancellationToken cancellationToken)
-        => getForumsStorage.GetForums(cancellationToken);
+    public Task<IEnumerable<Forum>> Handle(GetForumQuery query, CancellationToken cancellationToken)
+    {
+        return getForumsStorage.GetForums(cancellationToken);
+    }
 }

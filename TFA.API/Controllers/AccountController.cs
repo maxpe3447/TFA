@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using TFA.API.IAuthentication;
 using TFA.API.Models;
 using TFA.Domain.UseCases.SignIn;
@@ -8,27 +9,32 @@ namespace TFA.API.Controllers;
 
 [ApiController]
 [Route("account")]
-public class AccountController :ControllerBase
+public class AccountController : ControllerBase
 {
+    private readonly IMediator mediator;
+
+    public AccountController(IMediator mediator)
+    {
+        this.mediator = mediator;
+    }
+
     [HttpPost]
     public async Task<IActionResult> SignOn(
         [FromBody] SignOn request,
-        [FromServices] ISignOnUseCase signOnUseCase,
         CancellationToken cancellationToken)
     {
-        var identity = await signOnUseCase.Execute(new(request.Login, request.Password), cancellationToken);
+        var identity = await mediator.Send(new SignOnCommand(request.Login, request.Password), cancellationToken);
         return Ok(identity);
     }
 
     [HttpPost("signin")]
     public async Task<IActionResult> SignIn(
         [FromBody] SignIn request,
-        [FromServices] ISignInUseCase signInUseCase,
         [FromServices] IAuthTokenStorage tokenStorage,
         CancellationToken cancellationToken)
     {
-        var (identity, token)= await signInUseCase.Execute(
-            new(request.Login, request.Password), cancellationToken);
+        var (identity, token) = await mediator.Send(
+            new SignInCommand(request.Login, request.Password), cancellationToken);
 
         tokenStorage.Store(HttpContext, token);
 

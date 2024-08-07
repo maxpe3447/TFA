@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using Moq;
 using Moq.Language.Flow;
@@ -24,7 +25,9 @@ public class AuthenticationServiceShould
                 Base64Key = "OZAnTVuMoUGKXiYbyup1mIWsCIn2Q/TIxLnHNHo9zBs="
             });
 
-        sut = new AuthenticationService(decryptor.Object, options.Object);
+        var authentication = new Mock<IAuthenticationStorage>();
+
+        sut = new AuthenticationService(decryptor.Object, options.Object, new NullLogger<AuthenticationService>(), authentication.Object);
     }
 
     [Fact]
@@ -34,6 +37,6 @@ public class AuthenticationServiceShould
 
         var actual = await sut.Authenticate("some token", CancellationToken.None);
 
-        actual.Should().BeEquivalentTo(new User(Guid.Parse("e36a4543-4220-4044-914f-374f6ec0ba68")));
+        actual.Should().BeEquivalentTo(new User(Guid.Parse("e36a4543-4220-4044-914f-374f6ec0ba68"), Guid.Empty));
     }
 }

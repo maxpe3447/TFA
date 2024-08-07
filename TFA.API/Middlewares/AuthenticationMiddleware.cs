@@ -15,14 +15,15 @@ public class AuthenticationMiddleware
         HttpContext context,
         IAuthTokenStorage authTokenStorage,
         IAuthenticationService authenticationService,
-        IIdentityProvider identityProvider,
-        CancellationToken cancellationToken)
+        IIdentityProvider identityProvider)
     {
         var identity = authTokenStorage.TryExtract(context, out var authToken)
-            ? await authenticationService.Authenticate(authToken, cancellationToken)
+            ? await authenticationService.Authenticate(authToken, CancellationToken.None)
             : User.Guest;
 
         identityProvider.Current = identity;
+
+        Console.WriteLine(identity);
 
         await next(context);
     }

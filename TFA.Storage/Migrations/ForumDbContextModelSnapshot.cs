@@ -69,6 +69,25 @@ namespace TFA.Storage.Migrations
                     b.ToTable("Forums");
                 });
 
+            modelBuilder.Entity("TFA.Storage.Entities.Session", b =>
+                {
+                    b.Property<Guid>("SessionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("ExpiresAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("SessionId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Sessions");
+                });
+
             modelBuilder.Entity("TFA.Storage.Entities.Topic", b =>
                 {
                     b.Property<Guid>("TopicId")
@@ -146,6 +165,17 @@ namespace TFA.Storage.Migrations
                     b.Navigation("Topic");
                 });
 
+            modelBuilder.Entity("TFA.Storage.Entities.Session", b =>
+                {
+                    b.HasOne("TFA.Storage.Entities.User", "User")
+                        .WithMany("Sessions")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("TFA.Storage.Entities.Topic", b =>
                 {
                     b.HasOne("TFA.Storage.Entities.Forum", "Forum")
@@ -178,6 +208,8 @@ namespace TFA.Storage.Migrations
             modelBuilder.Entity("TFA.Storage.Entities.User", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("Sessions");
 
                     b.Navigation("Topics");
                 });
