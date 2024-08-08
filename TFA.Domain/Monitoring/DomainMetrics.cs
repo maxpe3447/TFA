@@ -1,4 +1,5 @@
 using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.Diagnostics.Metrics;
 
 namespace TFA.Domain.Monitoring;
@@ -8,6 +9,8 @@ internal class DomainMetrics
     private readonly Meter meter;
     //1private readonly Counter<int> forumfetch;
     private readonly ConcurrentDictionary<string, Counter<int>> counters = new();
+    internal static readonly ActivitySource ActivitySource = new ActivitySource("TFA.Domain");
+
     public DomainMetrics(IMeterFactory meterFactory)
     {
         meter = meterFactory.Create("TFA.DOMAIN");

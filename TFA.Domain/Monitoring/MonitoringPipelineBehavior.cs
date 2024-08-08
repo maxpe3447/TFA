@@ -1,9 +1,17 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
+using OpenTelemetry.Context.Propagation;
+using System.Diagnostics;
 
 namespace TFA.Domain.Monitoring;
 
-internal class MonitoringPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+internal abstract class MonitoringPipelineBehavior
+{
+    protected static readonly TextMapPropagator Propagation = Propagators.DefaultTextMapPropagator;
+
+}
+
+internal class MonitoringPipelineBehavior<TRequest, TResponse> :MonitoringPipelineBehavior, IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
 {
     private readonly DomainMetrics metrics;
@@ -27,7 +35,10 @@ internal class MonitoringPipelineBehavior<TRequest, TResponse> : IPipelineBehavi
         {
             return next.Invoke();
         }
-
+        using var activity = DomainMetrics.ActivitySource.StartActivity(
+            "usecase", ActivityKind.Internal,default(ActivityContext));
+        var activityContext = activity?.Context ?? Activity.Current?.Context ?? default;
+        activity.AddTag("tfa.command", request.GetType().Name);
         try
         {
             var result = next.Invoke();
