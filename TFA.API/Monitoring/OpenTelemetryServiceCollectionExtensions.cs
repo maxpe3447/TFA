@@ -1,6 +1,7 @@
 ﻿using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using System.Linq;
 
 namespace TFA.API.Monitoring;
 
@@ -22,7 +23,15 @@ internal static class OpenTelemetryServiceCollectionExtensions
                 }))
             .WithTracing(b=>b
                 .ConfigureResource(c=>c.AddService("TFA"))
-                .AddAspNetCoreInstrumentation()
+                .AddAspNetCoreInstrumentation(options =>
+                {
+                    options.Filter += context =>
+                        !context.Request.Path.Value!.Contains("metrics", StringComparison.InvariantCultureIgnoreCase) &&
+                        !context.Request.Path.Value!.Contains("swagger", StringComparison.InvariantCultureIgnoreCase);
+
+                    options.EnrichWithHttpResponse = (activity, response) =>
+                        activity.AddTag("error", response.StatusCode >= 400);
+                } )
                 .AddEntityFrameworkCoreInstrumentation(cfg=>cfg.SetDbStatementForText = true)
                 .AddSource("TFA.Domain")
                 .AddJaegerExporter(cfg=>cfg.Endpoint = new Uri(configuration.GetConnectionString("Tracing")!)));

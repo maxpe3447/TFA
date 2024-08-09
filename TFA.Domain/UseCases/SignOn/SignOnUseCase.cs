@@ -21,8 +21,6 @@ internal class SignOnUseCase : IRequestHandler<SignOnCommand, IIdentity>
     }
     public async Task<IIdentity> Handle(SignOnCommand command, CancellationToken cancellationToken)
     {
-        await validator.ValidateAndThrowAsync(command, cancellationToken);
-
         var (salt, hash) = passwordManager.GeneratePasswordParts(command.Password);
         var userId = await signOnStorage.CreateUser(command.Login, salt, hash, cancellationToken);
 

@@ -30,8 +30,6 @@ internal class SignInUseCase : IRequestHandler<SignInCommand, (IIdentity identit
     public async Task<(IIdentity identity, string token)> Handle(
         SignInCommand command, CancellationToken cancellationToken)
     {
-        await validator.ValidateAndThrowAsync(command, cancellationToken);
-
         var recognisedUser = await storage.FindUser(command.Login, cancellationToken);
         if (recognisedUser is null)
         {

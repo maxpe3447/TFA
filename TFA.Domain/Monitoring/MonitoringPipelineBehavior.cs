@@ -43,11 +43,13 @@ internal class MonitoringPipelineBehavior<TRequest, TResponse> :MonitoringPipeli
         {
             var result = next.Invoke();
             monitorRequest.MonitorSuccess(metrics);
+            activity.AddTag("error", false);
             return result;
         }
         catch (Exception e)
         {
             monitorRequest.MonitorFailure(metrics);
+            activity.AddTag("error", true);
             logger.LogError(e, "Unhandled error caught while handling command {Command}", request);
             throw;
         }

@@ -32,8 +32,6 @@ internal class CreateTopicUseCase : IRequestHandler<CreateTopicCommand, Topic>
 
     public async Task<Topic> Handle(CreateTopicCommand command, CancellationToken cancellationToken)
     {
-        await validator.ValidateAndThrowAsync(command, cancellationToken);
-
         var (forumId, title) = command;
         intentionManager.ThrowIfForbidden(TopicIntention.Create);
 

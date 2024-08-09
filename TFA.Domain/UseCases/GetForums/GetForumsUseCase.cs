@@ -12,8 +12,9 @@ internal class GetForumsUseCase : IRequestHandler<GetForumQuery, IEnumerable<For
     {
         this.getForumsStorage = getForumsStorage;
     }
-    public Task<IEnumerable<Forum>> Handle(GetForumQuery query, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Forum>> Handle(GetForumQuery query, CancellationToken cancellationToken)
     {
-        return getForumsStorage.GetForums(cancellationToken);
+        await Task.Delay(2000);
+        return await getForumsStorage.GetForums(cancellationToken);
     }
 }

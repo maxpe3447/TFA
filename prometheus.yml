@@ -9,4 +9,8 @@ scrape_configs:
           - host.docker.internal:5047
         labels:
           app: tfa
+      - targets:
+          - tfa-api:8080
+        labels:
+          app: tfa-docker
         

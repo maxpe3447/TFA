@@ -52,6 +52,16 @@ services:
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - tfa-prom:/prometheus  
+
+  loki:
+    container_name: 'tfa-loki'
+    image: 'grafana/loki'
+    ports:
+      - '3100:3100'
+    volumes:
+      - ./loki-config.yaml:/etc/loki/local-config.yaml
+    command: --config.file=/etc/loki/local-config.yaml
+
   grafana:
     container_name: 'tfa-grafana'
     image: 'grafana/grafana'
@@ -81,3 +91,17 @@ services:
       - '14268:14268'
       - '14269:14269'
       - '9411:9411'
+  api:
+    build:
+      context: .
+    container_name: 'tfa-api'
+    ports:
+      - '8080:8080'
+    environment:
+      ConnectionStrings__Postgres: 'Server=tfa-pg;Port=5432;Database=tfa;User Id=postgres;Password=postgrespw;'
+      ConnectionStrings__Logs-loki: 'http://tfa-loki:3100'
+      ConnectionStrings__Tracing: 'http://tfa-jeager:14268/api/traces'
+      Authentication__Base64Key: 'OZAnTVuMoUGKXiYbyup1mIWsCIn2Q/TIxLnHNHo9zBs='
+
+
+

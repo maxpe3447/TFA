@@ -23,8 +23,6 @@ internal class CreateForumUseCase : IRequestHandler<CreateForumCommand, Forum>
 
     public async Task<Forum> Handle(CreateForumCommand command, CancellationToken cancellationToken)
     {
-
-        await validator.ValidateAndThrowAsync(command, cancellationToken);
         intention.ThrowIfForbidden(ForumIntention.Create);
 
         return await createForumStorage.Create(command.Title, cancellationToken);
