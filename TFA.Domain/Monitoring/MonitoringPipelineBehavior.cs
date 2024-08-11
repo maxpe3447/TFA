@@ -44,6 +44,8 @@ internal class MonitoringPipelineBehavior<TRequest, TResponse> :MonitoringPipeli
             var result = next.Invoke();
             monitorRequest.MonitorSuccess(metrics);
             activity.AddTag("error", false);
+            logger.LogInformation("Command successfully handled {{Command}}", request);
+
             return result;
         }
         catch (Exception e)

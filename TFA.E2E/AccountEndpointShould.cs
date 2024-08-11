@@ -1,14 +1,16 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
-using System.Net.Http.Headers;
+using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http.Json;
+using System.Text.Json;
+using TFA.API.Models;
 using TFA.Domain.Authentication;
+using TFA.Storage;
 using Xunit.Abstractions;
-using Xunit.Sdk;
 
 namespace TFA.E2E;
 
-public class AccountEndpointShould :IClassFixture<ForumApiApplicationFactory>
+public class AccountEndpointShould : IClassFixture<ForumApiApplicationFactory>
 {
     private readonly ForumApiApplicationFactory factory;
     private readonly ITestOutputHelper testOutputHelper;
@@ -25,8 +27,8 @@ public class AccountEndpointShould :IClassFixture<ForumApiApplicationFactory>
     {
         using var httpClient = factory.CreateClient();
 
-        using var signOnResponse =  await httpClient.PostAsync(
-            "account", JsonContent.Create(new {login = "Test", password = "qwerty"}));
+        using var signOnResponse = await httpClient.PostAsync(
+            "account", JsonContent.Create(new { login = "Test", password = "qwerty" }));
 
         signOnResponse.IsSuccessStatusCode.Should().BeTrue();
         var createdUser = await signOnResponse.Content.ReadFromJsonAsync<User>();
@@ -56,6 +58,21 @@ public class AccountEndpointShould :IClassFixture<ForumApiApplicationFactory>
         var createdForumResponse = await httpClient.PostAsync(
             "forums", JsonContent.Create(new { title = "test Title" }));
         createdForumResponse.IsSuccessStatusCode.Should().BeTrue();
+
+        var createForum = (await createdForumResponse.Content.ReadFromJsonAsync<Forum>())!;
+
+        var title = "New topic";
+        var createTopicResponse = await httpClient.PostAsync(
+            $"forums/{createForum.Id}/topics",
+            JsonContent.Create(new { title = title }));
+        createTopicResponse.IsSuccessStatusCode.Should().BeTrue();
+
+        await using var scope = factory.Services.CreateAsyncScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<ForumDbContext>();
+        var domainEvents = dbContext.DomainEvents.ToArray();
+        domainEvents.Should().HaveCount(1);
+        var topic =  JsonSerializer.Deserialize<Domain.Models.Topic>(domainEvents[0].ContentBlob);
+        topic.Title.Should().Be(title);
     }
 
 }
