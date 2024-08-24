@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace TFA.Domain.UseCases.SignOut;
+namespace TFA.Forum.Domain.UseCases.SignOut;
 
 public class SignOutCommandValidator : AbstractValidator<SignOutCommand>
 {

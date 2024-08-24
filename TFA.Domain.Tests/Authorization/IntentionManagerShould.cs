@@ -2,11 +2,12 @@ using FluentAssertions;
 using Moq;
 using System.Net;
 using TFA.Domain.Authentication;
-using TFA.Domain.Authorization;
-using TFA.Domain.Exceptions;
-using TFA.Domain.UseCases.CreateForum;
+using TFA.Forum.Domain.Authentication;
+using TFA.Forum.Domain.Authorization;
+using TFA.Forum.Domain.Exceptions;
+using TFA.Forum.Domain.UseCases.CreateForum;
 
-namespace TFA.Domain.Tests.Authorization;
+namespace TFA.Forum.Domain.Tests.Authorization;
 
 public class IntentionManagerShould
 {
@@ -27,12 +28,12 @@ public class IntentionManagerShould
 
     [Theory]
     [InlineData(true, true)]
-    [InlineData (false, false)]
+    [InlineData(false, false)]
     public void ReturnMatchingResolverResult(bool expectedResolverResult, bool expected)
     {
         var resolver = new Mock<IIntentionResolver<ForumIntention>>();
         resolver
-            .Setup(r=>r.IsAllowed(It.IsAny<IIdentity>(), It.IsAny<ForumIntention>()))
+            .Setup(r => r.IsAllowed(It.IsAny<IIdentity>(), It.IsAny<ForumIntention>()))
             .Returns(expectedResolverResult);
 
         var identityProvider = new Mock<IIdentityProvider>();
@@ -41,7 +42,7 @@ public class IntentionManagerShould
             .Returns(new User(Guid.Parse("6e069d03-5e34-4ab5-ae05-0585e02ba5a3"), Guid.Empty));
 
         var sut = new IntentionManager(
-            new IIntentionResolver[]{ resolver.Object },
+            new IIntentionResolver[] { resolver.Object },
             identityProvider.Object);
 
         sut.IsAllowed(ForumIntention.Create).Should().Be(expected);

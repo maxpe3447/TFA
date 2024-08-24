@@ -1,10 +1,10 @@
 using MediatR;
-using TFA.Domain.Models;
-using TFA.Domain.Monitoring;
+using TFA.Forum.Domain.Models;
+using TFA.Forum.Domain.Monitoring;
 
-namespace TFA.Domain.UseCases.GetTopics;
+namespace TFA.Forum.Domain.UseCases.GetTopics;
 
-public record GetTopicsQuery(Guid ForumId, int Skip, int Take) 
+public record GetTopicsQuery(Guid ForumId, int Skip, int Take)
     : IRequest<(IEnumerable<Topic> resource, int totalCount)>, IMonitorRequest
 {
     private const string CounterName = "topics.fetched";

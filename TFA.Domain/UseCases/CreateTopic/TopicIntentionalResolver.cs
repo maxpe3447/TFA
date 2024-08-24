@@ -1,7 +1,7 @@
-using TFA.Domain.Authentication;
-using TFA.Domain.Authorization;
+using TFA.Forum.Domain.Authentication;
+using TFA.Forum.Domain.Authorization;
 
-namespace TFA.Domain.UseCases.CreateTopic;
+namespace TFA.Forum.Domain.UseCases.CreateTopic;
 
 internal class TopicIntentionalResolver : IIntentionResolver<TopicIntention>
 {

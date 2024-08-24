@@ -1,4 +1,6 @@
-﻿namespace TFA.Domain.Authentication;
+﻿using TFA.Forum.Domain.Authentication;
+
+namespace TFA.Domain.Authentication;
 
 public class User : IIdentity
 {

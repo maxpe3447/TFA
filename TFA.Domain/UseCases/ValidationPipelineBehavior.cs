@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using MediatR;
 
-namespace TFA.Domain.UseCases;
+namespace TFA.Forum.Domain.UseCases;
 
 internal class ValidationPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
@@ -14,7 +14,7 @@ internal class ValidationPipelineBehavior<TRequest, TResponse> : IPipelineBehavi
     }
 
     public async Task<TResponse> Handle(
-        TRequest request, 
+        TRequest request,
         RequestHandlerDelegate<TResponse> next,
         CancellationToken cancellationToken)
     {

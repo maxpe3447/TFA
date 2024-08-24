@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Security.Cryptography;
+using TFA.Forum.Domain.Authentication;
 
 namespace TFA.Domain.Authentication;
 

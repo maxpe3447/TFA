@@ -1,4 +1,4 @@
-namespace TFA.Domain.UseCases.SignOut;
+namespace TFA.Forum.Domain.UseCases.SignOut;
 
 public interface ISignOutStorage
 {

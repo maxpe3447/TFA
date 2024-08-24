@@ -1,4 +1,4 @@
-namespace TFA.Storage.Tests;
+namespace TFA.Forum.Storage.Tests;
 
 public class SignOutStorageShould
 {

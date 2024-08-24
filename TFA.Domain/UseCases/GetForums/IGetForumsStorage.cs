@@ -1,9 +1,6 @@
-using TFA.Domain.Models;
+namespace TFA.Forum.Domain.UseCases.GetForums;
 
-namespace TFA.Domain.UseCases.GetForums
+public interface IGetForumsStorage
 {
-    public interface IGetForumsStorage
-    {
-        Task<IEnumerable<Forum>> GetForums(CancellationToken cancellationToken);
-    }
+    Task<IEnumerable<Models.Forum>> GetForums(CancellationToken cancellationToken);
 }

@@ -3,12 +3,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http.Json;
 using System.Text.Json;
-using TFA.API.Models;
 using TFA.Domain.Authentication;
-using TFA.Storage;
+using TFA.Forum.Storage;
 using Xunit.Abstractions;
 
-namespace TFA.E2E;
+namespace TFA.Forum.E2E;
 
 public class AccountEndpointShould : IClassFixture<ForumApiApplicationFactory>
 {
@@ -59,19 +58,19 @@ public class AccountEndpointShould : IClassFixture<ForumApiApplicationFactory>
             "forums", JsonContent.Create(new { title = "test Title" }));
         createdForumResponse.IsSuccessStatusCode.Should().BeTrue();
 
-        var createForum = (await createdForumResponse.Content.ReadFromJsonAsync<Forum>())!;
+        var createForum = (await createdForumResponse.Content.ReadFromJsonAsync<Models.Forum>())!;
 
         var title = "New topic";
         var createTopicResponse = await httpClient.PostAsync(
             $"forums/{createForum.Id}/topics",
-            JsonContent.Create(new { title = title }));
+            JsonContent.Create(new { title }));
         createTopicResponse.IsSuccessStatusCode.Should().BeTrue();
 
         await using var scope = factory.Services.CreateAsyncScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<ForumDbContext>();
         var domainEvents = dbContext.DomainEvents.ToArray();
         domainEvents.Should().HaveCount(1);
-        var topic =  JsonSerializer.Deserialize<Domain.Models.Topic>(domainEvents[0].ContentBlob);
+        var topic = JsonSerializer.Deserialize<Domain.Models.Topic>(domainEvents[0].ContentBlob);
         topic.Title.Should().Be(title);
     }
 

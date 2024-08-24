@@ -1,4 +1,4 @@
-﻿namespace TFA.Domain.Models;
+﻿namespace TFA.Forum.Domain.Models;
 
 public class Forum
 {

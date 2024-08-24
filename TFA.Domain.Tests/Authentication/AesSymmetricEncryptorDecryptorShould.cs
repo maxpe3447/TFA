@@ -1,9 +1,9 @@
 using FluentAssertions;
 using System.Security.Cryptography;
-using TFA.Domain.Authentication;
+using TFA.Forum.Domain.Authentication;
 using Xunit.Abstractions;
 
-namespace TFA.Domain.Tests.Authentication;
+namespace TFA.Forum.Domain.Tests.Authentication;
 
 public class AesSymmetricEncryptorDecryptorShould
 {

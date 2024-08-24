@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace TFA.Forum.Domain.UseCases.CreateTopic;
 
-namespace TFA.Domain.UseCases.CreateTopic
+public enum TopicIntention
 {
-    public enum TopicIntention
-    {
-        Create
-    }
+    Create
 }

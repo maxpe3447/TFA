@@ -1,7 +1,7 @@
 using MediatR;
-using TFA.Domain.Monitoring;
+using TFA.Forum.Domain.Monitoring;
 
-namespace TFA.Domain.UseCases.SignOut;
+namespace TFA.Forum.Domain.UseCases.SignOut;
 
 public record SignOutCommand() : IRequest, IMonitorRequest
 {

@@ -3,16 +3,15 @@ using FluentValidation;
 using FluentValidation.Results;
 using Moq;
 using Moq.Language.Flow;
-using TFA.Domain.Authorization;
-using TFA.Domain.Models;
-using TFA.Domain.UseCases.CreateForum;
+using TFA.Forum.Domain.Authorization;
+using TFA.Forum.Domain.UseCases.CreateForum;
 
-namespace TFA.Domain.Tests.CreateForums;
+namespace TFA.Forum.Domain.Tests.CreateForums;
 
 public class CreateForumUseCaseShould
 {
     private readonly Mock<ICreateForumStorage> storage;
-    private readonly ISetup<ICreateForumStorage, Task<Forum>> createForumSetup;
+    private readonly ISetup<ICreateForumStorage, Task<Models.Forum>> createForumSetup;
     private readonly CreateForumUseCase sut;
 
     public CreateForumUseCaseShould()
@@ -38,7 +37,7 @@ public class CreateForumUseCaseShould
     [Fact]
     public async Task ReturnCreatedForum()
     {
-        var forum = new Forum
+        var forum = new Models.Forum
         {
             Id = Guid.Parse("ec5e548a-04ab-4b97-b223-325be04abf9d"),
             Title = "Hello forum"
@@ -46,10 +45,10 @@ public class CreateForumUseCaseShould
 
         createForumSetup.ReturnsAsync(forum);
 
-        var actual = await sut.Execute(new CreateForumCommand("Hello"), CancellationToken.None);
+        var actual = await sut.Handle(new CreateForumCommand("Hello"), CancellationToken.None);
         actual.Should().Be(forum);
 
-        storage.Verify(s=>s.Create("Hello", It.IsAny<CancellationToken>()), Times.Once);
+        storage.Verify(s => s.Create("Hello", It.IsAny<CancellationToken>()), Times.Once);
         storage.VerifyNoOtherCalls();
 
 

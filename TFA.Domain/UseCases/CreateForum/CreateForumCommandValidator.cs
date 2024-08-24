@@ -1,9 +1,9 @@
 using FluentValidation;
-using TFA.Domain.Exceptions;
+using TFA.Forum.Domain.Exceptions;
 
-namespace TFA.Domain.UseCases.CreateForum;
+namespace TFA.Forum.Domain.UseCases.CreateForum;
 
-internal class CreateForumCommandValidator:AbstractValidator<CreateForumCommand>
+internal class CreateForumCommandValidator : AbstractValidator<CreateForumCommand>
 {
     public CreateForumCommandValidator()
     {

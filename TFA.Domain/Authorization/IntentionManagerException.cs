@@ -1,4 +1,4 @@
-﻿namespace TFA.Domain.Authorization;
+﻿namespace TFA.Forum.Domain.Authorization;
 
 public class IntentionManagerException : Exception
 {

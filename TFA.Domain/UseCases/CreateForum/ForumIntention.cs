@@ -1,4 +1,4 @@
-namespace TFA.Domain.UseCases.CreateForum;
+namespace TFA.Forum.Domain.UseCases.CreateForum;
 
 public enum ForumIntention
 {

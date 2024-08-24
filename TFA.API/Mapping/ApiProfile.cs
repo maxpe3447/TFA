@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using TFA.Domain.Models;
+using TFA.Forum.Domain.Models;
 
 namespace TFA.API.Mapping
 {

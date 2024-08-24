@@ -1,4 +1,4 @@
-namespace TFA.Domain.UseCases.SignOn;
+namespace TFA.Forum.Domain.UseCases.SignOn;
 
 public interface ISignOnStorage
 {

@@ -1,9 +1,8 @@
 ﻿using MediatR;
-using TFA.Domain.Models;
-using TFA.Domain.Monitoring;
-namespace TFA.Domain.UseCases.GetForums;
 
-internal class GetForumsUseCase : IRequestHandler<GetForumQuery, IEnumerable<Forum>>
+namespace TFA.Forum.Domain.UseCases.GetForums;
+
+internal class GetForumsUseCase : IRequestHandler<GetForumQuery, IEnumerable<Models.Forum>>
 {
     private readonly IGetForumsStorage getForumsStorage;
 
@@ -12,7 +11,7 @@ internal class GetForumsUseCase : IRequestHandler<GetForumQuery, IEnumerable<For
     {
         this.getForumsStorage = getForumsStorage;
     }
-    public async Task<IEnumerable<Forum>> Handle(GetForumQuery query, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Models.Forum>> Handle(GetForumQuery query, CancellationToken cancellationToken)
     {
         //await Task.Delay(2000);
         return await getForumsStorage.GetForums(cancellationToken);

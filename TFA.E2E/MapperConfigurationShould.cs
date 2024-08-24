@@ -1,12 +1,11 @@
 using AutoMapper;
-using AutoMapper.Internal;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace TFA.E2E;
 
-public class MapperConfigurationShould :IClassFixture<WebApplicationFactory<Program>>
+public class MapperConfigurationShould : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly WebApplicationFactory<Program> factory;
 
@@ -19,6 +18,6 @@ public class MapperConfigurationShould :IClassFixture<WebApplicationFactory<Prog
     public void BeValid()
     {
         var configurationProvider = factory.Services.GetRequiredService<IMapper>().ConfigurationProvider;
-        configurationProvider.Invoking(p=>p.AssertConfigurationIsValid()).Should().NotThrow();
+        configurationProvider.Invoking(p => p.AssertConfigurationIsValid()).Should().NotThrow();
     }
 }

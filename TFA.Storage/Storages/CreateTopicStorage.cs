@@ -1,9 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
-using TFA.Domain;
-using TFA.Domain.Models;
-using TFA.Domain.UseCases.CreateTopic;
-namespace TFA.Storage.Storages;
+using TFA.Forum.Domain.Models;
+using TFA.Forum.Domain.UseCases.CreateTopic;
+
+namespace TFA.Forum.Storage.Storages;
 internal class CreateTopicStorage : ICreateTopicStorage
 {
     private readonly IGuidFactory guidFactory;
@@ -21,9 +20,9 @@ internal class CreateTopicStorage : ICreateTopicStorage
     }
     public async Task<Topic> CreateTopic(Guid forumId, Guid userId, string title, CancellationToken cancellationToken)
     {
-        var topic = new Entities.Topic 
-        { 
-            ForumId= forumId, 
+        var topic = new Entities.Topic
+        {
+            ForumId = forumId,
             Title = title,
             UserId = userId,
             TopicId = guidFactory.Create(),

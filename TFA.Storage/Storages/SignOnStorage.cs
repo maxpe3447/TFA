@@ -1,6 +1,6 @@
-using TFA.Domain.UseCases.SignOn;
+using TFA.Forum.Domain.UseCases.SignOn;
 
-namespace TFA.Storage.Storages;
+namespace TFA.Forum.Storage.Storages;
 
 internal class SignOnStorage : ISignOnStorage
 {

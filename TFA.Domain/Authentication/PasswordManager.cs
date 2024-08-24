@@ -1,7 +1,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace TFA.Domain.Authentication;
+namespace TFA.Forum.Domain.Authentication;
 
 public class PasswordManager : IPasswordManager
 {

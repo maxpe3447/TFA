@@ -1,4 +1,4 @@
-﻿namespace TFA.Domain.Monitoring;
+﻿namespace TFA.Forum.Domain.Monitoring;
 
 internal interface IMonitorRequest
 {

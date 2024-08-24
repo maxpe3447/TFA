@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TFA.Storage.Entities;
+namespace TFA.Forum.Storage.Entities;
 
 public class Comment
 {
@@ -13,8 +13,8 @@ public class Comment
     public Guid TopicId { get; set; }
     public string Text { get; set; }
     [ForeignKey(nameof(UserId))]
-    public User Author { get; set; }
+    public User? Author { get; set; }
 
     [ForeignKey(nameof(TopicId))]
-    public Topic Topic { get; set; }
+    public Topic? Topic { get; set; }
 }

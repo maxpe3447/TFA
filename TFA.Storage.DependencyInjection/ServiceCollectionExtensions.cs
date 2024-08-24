@@ -1,19 +1,20 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using TFA.Domain;
-using TFA.Domain.Authentication;
-using TFA.Domain.UseCases;
-using TFA.Domain.UseCases.CreateForum;
-using TFA.Domain.UseCases.CreateTopic;
-using TFA.Domain.UseCases.GetForums;
-using TFA.Domain.UseCases.GetTopics;
-using TFA.Domain.UseCases.SignIn;
-using TFA.Domain.UseCases.SignOn;
-using TFA.Domain.UseCases.SignOut;
-using TFA.Storage.Storages;
+using TFA.Forum.Domain;
+using TFA.Forum.Domain.Authentication;
+using TFA.Forum.Domain.UseCases;
+using TFA.Forum.Domain.UseCases.CreateForum;
+using TFA.Forum.Domain.UseCases.CreateTopic;
+using TFA.Forum.Domain.UseCases.GetForums;
+using TFA.Forum.Domain.UseCases.GetTopics;
+using TFA.Forum.Domain.UseCases.SignIn;
+using TFA.Forum.Domain.UseCases.SignOn;
+using TFA.Forum.Domain.UseCases.SignOut;
+using TFA.Forum.Storage;
+using TFA.Forum.Storage.Storages;
 
-namespace TFA.Storage.DependencyInjection;
+namespace TFA.Forum.Storage.DependencyInjection;
 
 public static class ServiceCollectionExtensions
 {

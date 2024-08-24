@@ -6,19 +6,15 @@ using TFA.Domain.UseCases.CreateForum;
 using TFA.Domain.UseCases.CreateTopic;
 using TFA.Domain.UseCases.GetForums;
 using TFA.Domain.UseCases.GetTopics;
+using TFA.Search.API.Grpc;
 
 namespace TFA.API.Controllers;
 
 [ApiController]
 [Route("forums")]
-public class ForumController : ControllerBase
+public class ForumController(IMediator mediator) : ControllerBase
 {
-    private readonly IMediator mediator;
-
-    public ForumController(IMediator mediator)
-    {
-        this.mediator = mediator;
-    }
+    private readonly IMediator mediator = mediator;
 
     [HttpPost]
     [ProducesResponseType(400)]
@@ -40,8 +36,14 @@ public class ForumController : ControllerBase
         Forum[]))]
     public async Task<IActionResult> GetForums(
         [FromServices] IMapper mapper,
+        [FromServices] SearchEngine.SearchEngineClient client,
         CancellationToken cancellationToken)
     {
+        await client.SearchAsync(new SearchRequest
+        {
+            Query = "hello"
+        }, cancellationToken: cancellationToken);
+
         var forums = await mediator.Send(new GetForumQuery(), cancellationToken);
         return Ok(forums.Select(mapper.Map<Forum>));
     }

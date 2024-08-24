@@ -1,10 +1,10 @@
 using MediatR;
-using TFA.Domain.Authentication;
-using TFA.Domain.Monitoring;
+using TFA.Forum.Domain.Authentication;
+using TFA.Forum.Domain.Monitoring;
 
-namespace TFA.Domain.UseCases.SignIn;
+namespace TFA.Forum.Domain.UseCases.SignIn;
 
-public record SignInCommand(string Login, string Password) 
+public record SignInCommand(string Login, string Password)
     : IRequest<(IIdentity identity, string token)>, IMonitorRequest
 {
     private const string CounterName = "user.sign-in";

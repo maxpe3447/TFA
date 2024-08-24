@@ -1,8 +1,9 @@
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
-using TFA.Storage.Storages;
+using TFA.Forum.Storage.Entities;
+using TFA.Storage.Tests;
 
-namespace TFA.Storage.Tests;
+namespace TFA.Forum.Storage.Tests;
 
 public class SignInStorageFixture : StorageTestFixture
 {
@@ -11,9 +12,9 @@ public class SignInStorageFixture : StorageTestFixture
 
         await base.InitializeAsync();
 
-        await using var dbContext = this.GetDbContext();
+        await using var dbContext = GetDbContext();
         await dbContext.Users.AddRangeAsync(
-            new Entities.User
+            new User
             {
                 UserId = Guid.Parse("2414eeda-50b6-4c3b-bbd2-c665a1fa31a3"),
                 Login = "testuser",
@@ -31,7 +32,7 @@ public class SignInStorageFixture : StorageTestFixture
     }
 }
 
-public class SignInStorageShould(SignInStorageFixture fixture) 
+public class SignInStorageShould(SignInStorageFixture fixture)
     : IClassFixture<SignInStorageFixture>
 {
     private readonly SignInStorage sut = new SignInStorage(
@@ -54,7 +55,7 @@ public class SignInStorageShould(SignInStorageFixture fixture)
     public async Task ReturnNewlyCreatedSessionId()
     {
         var sessionId = await sut.CreateSession(
-            Guid.Parse("2414eeda-50b6-4c3b-bbd2-c665a1fa31a3"), 
+            Guid.Parse("2414eeda-50b6-4c3b-bbd2-c665a1fa31a3"),
             new DateTimeOffset(2024, 07, 29, 1, 2, 3, TimeSpan.Zero),
             CancellationToken.None);
 

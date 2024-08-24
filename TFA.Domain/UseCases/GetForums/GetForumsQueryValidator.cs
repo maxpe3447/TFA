@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace TFA.Domain.UseCases.GetForums;
+namespace TFA.Forum.Domain.UseCases.GetForums;
 
 internal class GetForumsQueryValidator : AbstractValidator<GetForumQuery>
 {

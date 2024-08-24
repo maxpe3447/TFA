@@ -7,7 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Confluent.Kafka" Version="2.5.2" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.0" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.65.0" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.65.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.66.0-pre5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.1">
       <PrivateAssets>all</PrivateAssets>
@@ -22,6 +29,8 @@
     <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.9.0" />
     <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.9.0" />
     <PackageReference Include="OpenTelemetry.Instrumentation.EntityFrameworkCore" Version="1.0.0-beta.12" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.GrpcNetClient" Version="1.9.0-beta.1" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.9.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
     <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
     <PackageReference Include="Serilog.Sinks.Grafana.Loki" Version="8.3.0" />
@@ -32,10 +41,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TFA.Domain.DependencyInjection\TFA.Domain.DependencyInjection.csproj" />
-    <ProjectReference Include="..\TFA.Domain\TFA.Domain.csproj" />
-    <ProjectReference Include="..\TFA.Storage.DependencyInjection\TFA.Storage.DependencyInjection.csproj" />
+    <ProjectReference Include="..\TFA.Domain.DependencyInjection\TFA.Forum.Domain.DependencyInjection.csproj" />
+    <!--<ProjectReference Include="..\TFA.Domain\WTFA.Domain.csproj" />-->
+    <ProjectReference Include="..\TFA.Domain\TFA.Forum.Domain.csproj" />
+    <ProjectReference Include="..\TFA.Storage.DependencyInjection\TFA.Forum.Storage.DependencyInjection.csproj" />
     <ProjectReference Include="..\TFA.Storage\TFA.Storage.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+		<Protobuf Include="search.proto" />
+	</ItemGroup>	
+	
 </Project>

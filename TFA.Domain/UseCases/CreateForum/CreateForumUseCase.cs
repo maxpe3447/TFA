@@ -1,11 +1,10 @@
 ﻿using FluentValidation;
 using MediatR;
-using TFA.Domain.Authorization;
-using TFA.Domain.Models;
+using TFA.Forum.Domain.Authorization;
 
-namespace TFA.Domain.UseCases.CreateForum;
+namespace TFA.Forum.Domain.UseCases.CreateForum;
 
-internal class CreateForumUseCase : IRequestHandler<CreateForumCommand, Forum>
+internal class CreateForumUseCase : IRequestHandler<CreateForumCommand, Models.Forum>
 {
     private readonly IValidator<CreateForumCommand> validator;
     private readonly IIntentionManager intention;
@@ -21,7 +20,7 @@ internal class CreateForumUseCase : IRequestHandler<CreateForumCommand, Forum>
         this.createForumStorage = createForumStorage;
     }
 
-    public async Task<Forum> Handle(CreateForumCommand command, CancellationToken cancellationToken)
+    public async Task<Models.Forum> Handle(CreateForumCommand command, CancellationToken cancellationToken)
     {
         intention.ThrowIfForbidden(ForumIntention.Create);
 

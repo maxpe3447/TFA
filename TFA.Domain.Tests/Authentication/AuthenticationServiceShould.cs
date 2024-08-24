@@ -4,8 +4,9 @@ using Microsoft.Extensions.Options;
 using Moq;
 using Moq.Language.Flow;
 using TFA.Domain.Authentication;
+using TFA.Forum.Domain.Authentication;
 
-namespace TFA.Domain.Tests.Authentication;
+namespace TFA.Forum.Domain.Tests.Authentication;
 
 public class AuthenticationServiceShould
 {

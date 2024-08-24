@@ -13,7 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TFA.Storage\TFA.Storage.csproj" />
+    <ProjectReference Include="..\TFA.Domain\TFA.Forum.Domain.csproj" />
+    <ProjectReference Include="..\TFA.Storage\TFA.Forum.Storage.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,15 +1,14 @@
 using FluentAssertions;
 using Moq;
 using Moq.Language.Flow;
-using TFA.Domain.Models;
-using TFA.Domain.UseCases.GetForums;
+using TFA.Forum.Domain.UseCases.GetForums;
 
-namespace TFA.Domain.Tests.GetForums;
+namespace TFA.Forum.Domain.Tests.GetForums;
 
 public class GetForumsUseCaseShould
 {
     private readonly Mock<IGetForumsStorage> storage;
-    private readonly ISetup<IGetForumsStorage, Task<IEnumerable<Forum>>> getForumSetup;
+    private readonly ISetup<IGetForumsStorage, Task<IEnumerable<Models.Forum>>> getForumSetup;
     private readonly GetForumsUseCase sut;
 
     public GetForumsUseCaseShould()
@@ -22,7 +21,7 @@ public class GetForumsUseCaseShould
     [Fact]
     public async Task ReturnForums_FromStorage()
     {
-        var forums = new Forum[]
+        var forums = new Models.Forum[]
         {
             new(){ Id=Guid.Parse("c625ad08-e267-4105-b84e-6e00288f69ef"), Title = "Test Forum"},
             new(){ Id=Guid.Parse("c625ad08-e267-4105-b84e-6e00288f69ef"), Title = "Test Forum"},
@@ -30,7 +29,7 @@ public class GetForumsUseCaseShould
 
         getForumSetup.ReturnsAsync(forums);
 
-        var actual = await sut.Execute(CancellationToken.None);
+        var actual = await sut.Handle(new GetForumQuery(),CancellationToken.None);
         actual.Should().BeSameAs(forums);
 
         storage.Verify(s => s.GetForums(CancellationToken.None), Times.Once);

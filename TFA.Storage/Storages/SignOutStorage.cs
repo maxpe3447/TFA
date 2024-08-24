@@ -1,6 +1,6 @@
-using TFA.Domain.UseCases.SignOut;
+using TFA.Forum.Domain.UseCases.SignOut;
 
-namespace TFA.Storage.Storages;
+namespace TFA.Forum.Storage.Storages;
 
 public class SignOutStorage : ISignOutStorage
 {

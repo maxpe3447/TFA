@@ -2,7 +2,7 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
 
-namespace TFA.Domain.Monitoring;
+namespace TFA.Forum.Domain.Monitoring;
 
 internal class DomainMetrics
 {

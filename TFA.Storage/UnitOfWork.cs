@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
-using TFA.Domain;
+using TFA.Forum.Domain;
 
-namespace TFA.Storage;
+namespace TFA.Forum.Storage;
 
 class UnitOfWork(IServiceProvider serviceProvider) : IUnitOfWork
 {

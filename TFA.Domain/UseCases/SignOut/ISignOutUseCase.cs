@@ -1,8 +1,8 @@
 using MediatR;
-using TFA.Domain.Authentication;
-using TFA.Domain.Authorization;
+using TFA.Forum.Domain.Authentication;
+using TFA.Forum.Domain.Authorization;
 
-namespace TFA.Domain.UseCases.SignOut;
+namespace TFA.Forum.Domain.UseCases.SignOut;
 
 
 internal class SignOutUseCase : IRequestHandler<SignOutCommand>

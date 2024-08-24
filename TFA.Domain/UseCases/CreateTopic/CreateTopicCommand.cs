@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using TFA.Domain.Models;
-using TFA.Domain.Monitoring;
+using TFA.Forum.Domain.Models;
+using TFA.Forum.Domain.Monitoring;
 
-namespace TFA.Domain.UseCases.CreateTopic;
+namespace TFA.Forum.Domain.UseCases.CreateTopic;
 
 public record CreateTopicCommand(Guid ForumId, string Title) : IRequest<Topic>, IMonitorRequest
 {

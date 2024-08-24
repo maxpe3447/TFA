@@ -1,10 +1,9 @@
 using MediatR;
-using TFA.Domain.Models;
-using TFA.Domain.Monitoring;
+using TFA.Forum.Domain.Monitoring;
 
-namespace TFA.Domain.UseCases.CreateForum;
+namespace TFA.Forum.Domain.UseCases.CreateForum;
 
-public record CreateForumCommand(string Title) : IRequest<Forum>, IMonitorRequest
+public record CreateForumCommand(string Title) : IRequest<Models.Forum>, IMonitorRequest
 {
     private const string CounterName = "forum.created";
 

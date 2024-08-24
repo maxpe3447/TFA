@@ -5,7 +5,7 @@ using Microsoft.Extensions.Caching.Memory;
 using System.Reflection;
 using Testcontainers.PostgreSql;
 
-namespace TFA.Storage.Tests;
+namespace TFA.Forum.Storage.Tests;
 
 public class StorageTestFixture : IAsyncLifetime
 {

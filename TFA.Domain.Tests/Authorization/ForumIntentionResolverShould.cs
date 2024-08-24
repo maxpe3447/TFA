@@ -1,9 +1,10 @@
 using FluentAssertions;
 using Moq;
 using TFA.Domain.Authentication;
-using TFA.Domain.UseCases.CreateForum;
+using TFA.Forum.Domain.Authentication;
+using TFA.Forum.Domain.UseCases.CreateForum;
 
-namespace TFA.Domain.Tests.Authorization;
+namespace TFA.Forum.Domain.Tests.Authorization;
 
 public class ForumIntentionResolverShould
 {

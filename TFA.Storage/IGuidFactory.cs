@@ -1,4 +1,4 @@
-﻿namespace TFA.Storage;
+﻿namespace TFA.Forum.Storage;
 
 internal interface IGuidFactory
 {

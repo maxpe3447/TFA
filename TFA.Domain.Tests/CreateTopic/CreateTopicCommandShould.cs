@@ -1,8 +1,7 @@
 using FluentAssertions;
-using TFA.Domain.UseCases.CreateTopic;
-using Xunit.Sdk;
+using TFA.Forum.Domain.UseCases.CreateTopic;
 
-namespace TFA.Domain.Tests.CreateTopic;
+namespace TFA.Forum.Domain.Tests.CreateTopic;
 
 public class CreateTopicCommandShould
 {

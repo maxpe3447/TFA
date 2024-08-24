@@ -1,7 +1,8 @@
 using FluentValidation;
-using TFA.Domain.Exceptions;
+using TFA.Forum.Domain.Exceptions;
+using TFA.Forum.Domain.UseCases.CreateTopic;
 
-namespace TFA.Domain.UseCases.CreateTopic;
+namespace TFA.Forum.Domain.UseCases.CreateTopic;
 
 internal class CreateTopicCommandValidator: AbstractValidator<CreateTopicCommand>
 {

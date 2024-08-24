@@ -1,12 +1,13 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
+using TFA.Domain.Authentication;
 
-namespace TFA.Domain.Authentication;
+namespace TFA.Forum.Domain.Authentication;
 
 internal class AesSymmetricEncryptorDecryptor : ISymmetricDecryptor, ISymmetricEncryptor
 {
     private const int IvSize = 16;
-    private readonly Lazy<Aes> aes = new (Aes.Create);
+    private readonly Lazy<Aes> aes = new(Aes.Create);
     public async Task<string> Decrypt(string encryptedText, byte[] key, CancellationToken cancellationToken)
     {
         var encryptedBytes = Convert.FromBase64String(encryptedText);

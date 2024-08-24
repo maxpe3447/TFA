@@ -1,6 +1,4 @@
-using TFA.Domain.UseCases.CreateTopic;
-
-namespace TFA.Domain.Authentication;
+namespace TFA.Forum.Domain.Authentication;
 
 public interface IAuthenticationService
 {

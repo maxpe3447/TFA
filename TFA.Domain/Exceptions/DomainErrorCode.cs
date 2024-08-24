@@ -1,4 +1,4 @@
-namespace TFA.Domain.Exceptions;
+namespace TFA.Forum.Domain.Exceptions;
 
 public enum DomainErrorCode
 {

@@ -1,8 +1,8 @@
 using FluentAssertions;
-using TFA.Domain.Authentication;
+using TFA.Forum.Domain.Authentication;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace TFA.Domain.Tests.Authentication;
+namespace TFA.Forum.Domain.Tests.Authentication;
 
 public class PasswordManagerShould
 {

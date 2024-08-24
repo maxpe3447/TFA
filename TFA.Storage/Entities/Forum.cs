@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TFA.Storage.Entities;
+namespace TFA.Forum.Storage.Entities;
 
 public class Forum
 {

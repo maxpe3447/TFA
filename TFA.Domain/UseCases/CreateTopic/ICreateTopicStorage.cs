@@ -1,6 +1,6 @@
-﻿using TFA.Domain.Models;
+﻿using TFA.Forum.Domain.Models;
 
-namespace TFA.Domain.UseCases.CreateTopic;
+namespace TFA.Forum.Domain.UseCases.CreateTopic;
 
 public interface ICreateTopicStorage : IStorage
 {

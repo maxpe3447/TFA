@@ -1,11 +1,10 @@
 using FluentAssertions;
-using Microsoft.EntityFrameworkCore.InMemory.Query.Internal;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel.Utilities;
 using Moq;
 using TFA.Domain.Authentication;
-using TFA.Domain.UseCases.CreateTopic;
+using TFA.Forum.Domain.Authentication;
+using TFA.Forum.Domain.UseCases.CreateTopic;
 
-namespace TFA.Domain.Tests.Authorization;
+namespace TFA.Forum.Domain.Tests.Authorization;
 
 public class TopicResolverShould
 {

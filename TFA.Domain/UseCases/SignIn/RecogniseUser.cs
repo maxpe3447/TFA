@@ -1,6 +1,6 @@
-namespace TFA.Domain.UseCases.SignIn;
+namespace TFA.Forum.Domain.UseCases.SignIn;
 
-public class RecognisedUser
+public class RecognizedUser
 {
     public Guid UserId { get; set; }
     public byte[] Salt { get; set; }

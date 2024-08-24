@@ -1,4 +1,4 @@
-﻿namespace TFA.Domain;
+﻿namespace TFA.Forum.Domain;
 
 public interface IUnitOfWork
 {

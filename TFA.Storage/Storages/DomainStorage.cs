@@ -1,16 +1,23 @@
-﻿using System.Text.Json;
-using TFA.Domain;
-using TFA.Domain.UseCases;
+﻿using AutoMapper;
+using System.Text.Json;
+using TFA.Forum.Domain;
+using TFA.Forum.Domain.UseCases;
+using TFA.Forum.Storage.Entities;
 
-namespace TFA.Storage.Storages;
+namespace TFA.Forum.Storage.Storages;
 
 internal class DomainStorage(
     ForumDbContext forumDbContext,
     IGuidFactory guidFactory,
-    IMomentProvider momentProvider) : IDomainEventStorage, IStorage
+    IMomentProvider momentProvider,
+    IMapper mapper) : IDomainEventStorage, IStorage
 {
-    public async Task AddEvent<TDomainEntity>(TDomainEntity domainEntity, CancellationToken cancellationToken)
+    private readonly IMapper mapper = mapper;
+
+    public async Task AddEvent(Domain.DomainEvents.ForumDomainEvent domainEntity, CancellationToken cancellationToken)
     {
+        var storageDomainEvent = mapper.Map<Entities.ForumDomainEvent>(domainEntity);
+
         await forumDbContext.DomainEvents.AddAsync(new DomainEvent
         {
             DomainEventId = guidFactory.Create(),

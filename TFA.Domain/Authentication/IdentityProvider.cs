@@ -1,4 +1,4 @@
-namespace TFA.Domain.Authentication;
+namespace TFA.Forum.Domain.Authentication;
 
 internal class IdentityProvider : IIdentityProvider//, IIdentitySetter
 {

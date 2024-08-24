@@ -1,7 +1,7 @@
 using FluentAssertions;
-using TFA.Domain.UseCases.CreateForum;
+using TFA.Forum.Domain.UseCases.CreateForum;
 
-namespace TFA.Domain.Tests.CreateForums;
+namespace TFA.Forum.Domain.Tests.CreateForums;
 
 public class CreateForumCommandValidatorShould
 {

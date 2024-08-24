@@ -1,6 +1,6 @@
-﻿using TFA.Domain.Authentication;
+﻿using TFA.Forum.Domain.Authentication;
 
-namespace TFA.Domain.Authorization;
+namespace TFA.Forum.Domain.Authorization;
 
 public interface IIntentionResolver
 {

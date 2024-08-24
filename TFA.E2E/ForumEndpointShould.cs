@@ -2,6 +2,7 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using System.Net.Http.Json;
 using TFA.API.Models;
+using TFA.Forum.E2E;
 
 namespace TFA.E2E;
 

@@ -1,7 +1,7 @@
 using FluentValidation;
-using TFA.Domain.Exceptions;
+using TFA.Forum.Domain.Exceptions;
 
-namespace TFA.Domain.UseCases.GetTopics;
+namespace TFA.Forum.Domain.UseCases.GetTopics;
 
 internal class GetTopicsQueryValidator : AbstractValidator<GetTopicsQuery>
 {

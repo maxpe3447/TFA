@@ -1,8 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using TFA.Domain.Models;
-using TFA.Domain.UseCases.GetTopics;
+using TFA.Forum.Domain.Models;
+using TFA.Forum.Domain.UseCases.GetTopics;
+using TFA.Forum.Storage;
 
-namespace TFA.Storage.Storages;
+namespace TFA.Forum.Storage.Storages;
 
 internal class GetTopicsStorage : IGetTopicsStorage
 {

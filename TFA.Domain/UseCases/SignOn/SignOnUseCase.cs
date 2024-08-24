@@ -1,8 +1,9 @@
 ﻿using FluentValidation;
 using MediatR;
 using TFA.Domain.Authentication;
+using TFA.Forum.Domain.Authentication;
 
-namespace TFA.Domain.UseCases.SignOn;
+namespace TFA.Forum.Domain.UseCases.SignOn;
 
 internal class SignOnUseCase : IRequestHandler<SignOnCommand, IIdentity>
 {

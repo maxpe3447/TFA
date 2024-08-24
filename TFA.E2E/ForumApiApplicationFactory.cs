@@ -7,9 +7,9 @@ using Microsoft.Extensions.Configuration;
 using System.Reflection;
 using System.Security.Cryptography;
 using Testcontainers.PostgreSql;
-using TFA.Storage;
+using TFA.Forum.Storage;
 
-namespace TFA.E2E;
+namespace TFA.Forum.E2E;
 
 public class ForumApiApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {

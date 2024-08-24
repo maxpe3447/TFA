@@ -1,9 +1,9 @@
 using FluentValidation;
-using TFA.Domain.Exceptions;
+using TFA.Forum.Domain.Exceptions;
 
-namespace TFA.Domain.UseCases.SignOn;
+namespace TFA.Forum.Domain.UseCases.SignOn;
 
-public class SignOnCommandValidator :AbstractValidator<SignOnCommand>
+public class SignOnCommandValidator : AbstractValidator<SignOnCommand>
 {
     public SignOnCommandValidator()
     {

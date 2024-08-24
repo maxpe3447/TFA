@@ -1,9 +1,9 @@
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using TFA.Domain.Authentication;
+using TFA.Forum.Domain.Authentication;
 
-namespace TFA.Storage.Storages;
+namespace TFA.Forum.Storage.Storages;
 
 public class AuthenticationStorage : IAuthenticationStorage
 {

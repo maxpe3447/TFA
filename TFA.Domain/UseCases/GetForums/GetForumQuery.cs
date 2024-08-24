@@ -1,10 +1,9 @@
 ﻿using MediatR;
-using TFA.Domain.Models;
-using TFA.Domain.Monitoring;
+using TFA.Forum.Domain.Monitoring;
 
-namespace TFA.Domain.UseCases.GetForums;
+namespace TFA.Forum.Domain.UseCases.GetForums;
 
-public record GetForumQuery() : IRequest<IEnumerable<Forum>>, IMonitorRequest
+public record GetForumQuery() : IRequest<IEnumerable<Models.Forum>>, IMonitorRequest
 {
     private const string CounterName = "forum.fetch";
 

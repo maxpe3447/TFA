@@ -2,8 +2,9 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Options;
 using TFA.Domain.Authentication;
+using TFA.Forum.Domain.Authentication;
 
-namespace TFA.Domain.UseCases.SignIn;
+namespace TFA.Forum.Domain.UseCases.SignIn;
 
 internal class SignInUseCase : IRequestHandler<SignInCommand, (IIdentity identity, string token)>
 {

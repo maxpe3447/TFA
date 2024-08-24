@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TFA.Storage.Entities;
+using TFA.Forum.Storage.Entities;
 
-namespace TFA.Storage;
+namespace TFA.Forum.Storage;
 
 public class ForumDbContext : DbContext
 {
@@ -10,7 +10,7 @@ public class ForumDbContext : DbContext
 
     }
     public DbSet<User> Users { get; set; }
-    public DbSet<Forum> Forums { get; set; }
+    public DbSet<Entities.Forum> Forums { get; set; }
     public DbSet<Topic> Topics { get; set; }
     public DbSet<Comment> Comments { get; set; }
     public DbSet<Session> Sessions { get; set; }

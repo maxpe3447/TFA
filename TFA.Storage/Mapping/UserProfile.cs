@@ -1,14 +1,14 @@
 using AutoMapper;
-using TFA.Domain.UseCases.SignIn;
-using TFA.Storage.Entities;
+using TFA.Forum.Domain.UseCases.SignIn;
+using TFA.Forum.Storage.Entities;
 
-namespace TFA.Storage.Mapping;
+namespace TFA.Forum.Storage.Mapping;
 
 public class UserProfile : Profile
 {
     public UserProfile()
     {
-        CreateMap<User, RecognisedUser>();
+        CreateMap<User, RecognizedUser>();
         CreateMap<Session, Domain.Authentication.Session>();
     }
 }

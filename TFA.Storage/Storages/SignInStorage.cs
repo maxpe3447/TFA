@@ -1,9 +1,9 @@
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using TFA.Domain.UseCases.SignIn;
+using TFA.Forum.Domain.UseCases.SignIn;
 
-namespace TFA.Storage.Storages;
+namespace TFA.Forum.Storage.Storages;
 
 internal class SignInStorage : ISignInStorage
 {
@@ -36,11 +36,11 @@ internal class SignInStorage : ISignInStorage
         return sessionId;
     }
 
-    public Task<RecognisedUser?> FindUser(string login, CancellationToken cancellationToken)
+    public Task<RecognizedUser?> FindUser(string login, CancellationToken cancellationToken)
     {
         return dbContext.Users
             .Where(u => u.Login.Equals(login))
-            .ProjectTo<RecognisedUser>(mapper.ConfigurationProvider)
+            .ProjectTo<RecognizedUser>(mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(cancellationToken);
     }
 }

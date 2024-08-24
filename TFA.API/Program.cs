@@ -1,13 +1,15 @@
- using Microsoft.EntityFrameworkCore;
-using System.Linq;
+using Confluent.Kafka;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
+using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using TFA.API.DependencyInjection;
+using TFA.API;
 using TFA.API.IAuthentication;
 using TFA.API.Middlewares;
 using TFA.API.Monitoring;
-using TFA.Domain.Authentication;
-using TFA.Domain.DependencyInjection;
-using TFA.Storage.DependencyInjection;
+using TFA.Forum.Domain.Authentication;
+using TFA.Forum.Domain.DependencyInjection;
+using TFA.Forum.Storage.DependencyInjection;
+using TFA.Search.API.Grpc;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
@@ -27,6 +29,20 @@ builder.Services
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddGrpcClient<SearchEngine.SearchEngineClient>(options => 
+options.Address = new Uri(builder.Configuration.GetValue<string>("SearchEngine:Path")!));
+
+//builder.Services.AddSingleton(new ConsumerBuilder<byte[], byte[]>(new ConsumerConfig
+//{
+//    BootstrapServers = "localhost:9092",
+//    EnableAutoCommit = false,
+//    AutoOffsetReset = AutoOffsetReset.Earliest,
+//    GroupId = "tfa.experiment"
+//}).Build());
+//builder.Services.AddHostedService<KafkaConsumer>();
+//builder.Services.Configure<HostOptions>(options =>
+//    options.BackgroundServiceExceptionBehavior = BackgroundServiceExceptionBehavior.StopHost);
 
 var app = builder.Build();
 app.UseOpenTelemetryPrometheusScrapingEndpoint();

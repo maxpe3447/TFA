@@ -2,30 +2,21 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
-using TFA.Domain.Models;
-using TFA.Domain.UseCases.CreateForum;
-using TFA.Storage.Entities;
+using TFA.Forum.Domain.UseCases.CreateForum;
 
-namespace TFA.Storage.Storages;
+namespace TFA.Forum.Storage.Storages;
 
-internal class CreateForumStorage : ICreateForumStorage
+internal class CreateForumStorage(
+    IGuidFactory guidFactory,
+    ForumDbContext forumDbContext,
+    IMemoryCache memoryCache,
+    IMapper mapper) : ICreateForumStorage
 {
-    private readonly IGuidFactory guidFactory;
-    private readonly ForumDbContext forumDbContext;
-    private readonly IMemoryCache memoryCache;
-    private readonly IMapper mapper;
+    private readonly IGuidFactory guidFactory = guidFactory;
+    private readonly ForumDbContext forumDbContext = forumDbContext;
+    private readonly IMemoryCache memoryCache = memoryCache;
+    private readonly IMapper mapper = mapper;
 
-    public CreateForumStorage(
-        IGuidFactory guidFactory,
-        ForumDbContext forumDbContext,
-        IMemoryCache memoryCache,
-        IMapper mapper)
-    {
-        this.guidFactory = guidFactory;
-        this.forumDbContext = forumDbContext;
-        this.memoryCache = memoryCache;
-        this.mapper = mapper;
-    }
     public async Task<Domain.Models.Forum> Create(string title, CancellationToken cancellationToken)
     {
         var forum = new Entities.Forum
@@ -34,8 +25,8 @@ internal class CreateForumStorage : ICreateForumStorage
             Title = title
         };
 
-        await forumDbContext.Forums.AddAsync(forum);
-        await forumDbContext.SaveChangesAsync();
+        await forumDbContext.Forums.AddAsync(forum, cancellationToken);
+        await forumDbContext.SaveChangesAsync(cancellationToken);
 
         memoryCache.Remove(nameof(GetForumStorage.GetForums));
 

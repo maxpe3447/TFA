@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
 using MediatR;
-using TFA.Domain.Models;
-using TFA.Domain.UseCases.GetForums;
+using TFA.Forum.Domain.Models;
+using TFA.Forum.Domain.UseCases.GetForums;
 
-namespace TFA.Domain.UseCases.GetTopics;
+namespace TFA.Forum.Domain.UseCases.GetTopics;
 
 internal class GetTopicUseCase : IRequestHandler<GetTopicsQuery, (IEnumerable<Topic> resource, int totalCount)>
 {
@@ -17,7 +17,7 @@ internal class GetTopicUseCase : IRequestHandler<GetTopicsQuery, (IEnumerable<To
         IGetForumsStorage getForumsStorage)
     {
         this.validator = validator;
-        this.storage = getTopicsStorage;
+        storage = getTopicsStorage;
         this.getForumsStorage = getForumsStorage;
     }
 

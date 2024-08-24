@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
 using MediatR;
-using TFA.Domain.Authentication;
-using TFA.Domain.Authorization;
-using TFA.Domain.Models;
-using TFA.Domain.UseCases.GetForums;
+using TFA.Forum.Domain.Authentication;
+using TFA.Forum.Domain.Authorization;
+using TFA.Forum.Domain.Models;
+using TFA.Forum.Domain.UseCases.GetForums;
 
-namespace TFA.Domain.UseCases.CreateTopic;
+namespace TFA.Forum.Domain.UseCases.CreateTopic;
 
 internal class CreateTopicUseCase : IRequestHandler<CreateTopicCommand, Topic>
 {

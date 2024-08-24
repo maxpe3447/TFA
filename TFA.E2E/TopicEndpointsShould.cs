@@ -1,15 +1,10 @@
 
 using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http.Json;
-using System.Reflection;
-using TFA.API.Models;
-using TFA.Storage;
 
-namespace TFA.E2E;
+namespace TFA.Forum.E2E;
 
-public class TopicEndpointsShould(ForumApiApplicationFactory factory) 
+public class TopicEndpointsShould(ForumApiApplicationFactory factory)
     : IClassFixture<ForumApiApplicationFactory>, IAsyncLifetime
 {
     private readonly Guid forumId = Guid.Parse("027efe19-9659-418a-a872-56c4df2d8da8");
@@ -29,7 +24,7 @@ public class TopicEndpointsShould(ForumApiApplicationFactory factory)
         createdForum.Should().NotBeNull();
 
 
-        var response = await httpClient.PostAsync($"forums/{createdForum!.Id}/topics", 
+        var response = await httpClient.PostAsync($"forums/{createdForum!.Id}/topics",
             JsonContent.Create(new { title = "Hello world" }));
         response.StatusCode.Should().Be(System.Net.HttpStatusCode.InternalServerError);
     }

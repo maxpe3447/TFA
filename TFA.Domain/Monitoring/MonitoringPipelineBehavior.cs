@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using OpenTelemetry.Context.Propagation;
 using System.Diagnostics;
 
-namespace TFA.Domain.Monitoring;
+namespace TFA.Forum.Domain.Monitoring;
 
 internal abstract class MonitoringPipelineBehavior
 {
@@ -11,7 +11,7 @@ internal abstract class MonitoringPipelineBehavior
 
 }
 
-internal class MonitoringPipelineBehavior<TRequest, TResponse> :MonitoringPipelineBehavior, IPipelineBehavior<TRequest, TResponse>
+internal class MonitoringPipelineBehavior<TRequest, TResponse> : MonitoringPipelineBehavior, IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
 {
     private readonly DomainMetrics metrics;
@@ -22,7 +22,7 @@ internal class MonitoringPipelineBehavior<TRequest, TResponse> :MonitoringPipeli
         ILogger<MonitoringPipelineBehavior<TRequest, TResponse>> logger
 )
     {
-        this.metrics = domainMetrics;
+        metrics = domainMetrics;
         this.logger = logger;
     }
 
@@ -36,7 +36,7 @@ internal class MonitoringPipelineBehavior<TRequest, TResponse> :MonitoringPipeli
             return next.Invoke();
         }
         using var activity = DomainMetrics.ActivitySource.StartActivity(
-            "usecase", ActivityKind.Internal,default(ActivityContext));
+            "usecase", ActivityKind.Internal, default(ActivityContext));
         var activityContext = activity?.Context ?? Activity.Current?.Context ?? default;
         activity.AddTag("tfa.command", request.GetType().Name);
         try
