@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TFA.Domain\TFA.Domain.csproj" />
     <ProjectReference Include="..\TFA.Domain\TFA.Forum.Domain.csproj" />
   </ItemGroup>
 

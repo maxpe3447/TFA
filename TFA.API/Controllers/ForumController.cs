@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using TFA.API.Models;
-using TFA.Domain.UseCases.CreateForum;
-using TFA.Domain.UseCases.CreateTopic;
-using TFA.Domain.UseCases.GetForums;
-using TFA.Domain.UseCases.GetTopics;
+using TFA.Forum.API.Models;
+using TFA.Forum.Domain.UseCases.CreateForum;
+using TFA.Forum.Domain.UseCases.CreateTopic;
+using TFA.Forum.Domain.UseCases.GetForums;
+using TFA.Forum.Domain.UseCases.GetTopics;
 using TFA.Search.API.Grpc;
 
-namespace TFA.API.Controllers;
+namespace TFA.Forum.API.Controllers;
 
 [ApiController]
 [Route("forums")]
@@ -19,7 +19,7 @@ public class ForumController(IMediator mediator) : ControllerBase
     [HttpPost]
     [ProducesResponseType(400)]
     [ProducesResponseType(403)]
-    [ProducesResponseType(201, Type = typeof(Forum))]
+    [ProducesResponseType(201, Type = typeof(Models.Forum))]
     public async Task<ActionResult> CreateForum(
         [FromBody] CreateForum request,
         [FromServices] IMapper mapper,
@@ -28,12 +28,12 @@ public class ForumController(IMediator mediator) : ControllerBase
         var command = new CreateForumCommand(request.Title);
         var forum = await mediator.Send(command, cancellationToken);
 
-        return CreatedAtRoute(nameof(GetForums), mapper.Map<Forum>(forum));
+        return CreatedAtRoute(nameof(GetForums), mapper.Map<Models.Forum>(forum));
     }
 
     [HttpGet(Name = nameof(GetForums))]
     [ProducesResponseType(200, Type = typeof(
-        Forum[]))]
+        Models.Forum[]))]
     public async Task<IActionResult> GetForums(
         [FromServices] IMapper mapper,
         [FromServices] SearchEngine.SearchEngineClient client,
@@ -45,7 +45,7 @@ public class ForumController(IMediator mediator) : ControllerBase
         }, cancellationToken: cancellationToken);
 
         var forums = await mediator.Send(new GetForumQuery(), cancellationToken);
-        return Ok(forums.Select(mapper.Map<Forum>));
+        return Ok(forums.Select(mapper.Map<Models.Forum>));
     }
     [HttpPost("{forumId}/topics")]
     [ProducesResponseType(400)]

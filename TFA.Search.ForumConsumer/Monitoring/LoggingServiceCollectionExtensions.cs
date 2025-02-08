@@ -5,7 +5,7 @@ using Serilog.Filters;
 using Serilog.Sinks.Grafana.Loki;
 using System.Diagnostics;
 
-namespace TFA.API.Monitoring;
+namespace TFA.Search.ForumConsumer.Monitoring;
 
 public static class LoggingServiceCollectionExtensions
 {
@@ -27,9 +27,9 @@ public static class LoggingServiceCollectionExtensions
     .Enrich.With<TracingContextEnricher>()
     .WriteTo.Logger(lc => lc
         .Filter.ByExcluding(Matching.FromSource("Microsoft"))
-        .WriteTo.OpenSearch(
-        configuration.GetConnectionString("Logs"),
-        "forum-logs-{0:yyyy.MM.dd}")
+        //.WriteTo.OpenSearch(
+        //configuration.GetConnectionString("Logs"),
+        //"forum-logs-{0:yyyy.MM.dd}")
         .WriteTo.GrafanaLoki(
             configuration.GetConnectionString("Logs-loki")!,
             propertiesAsLabels: [

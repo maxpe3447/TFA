@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TFA.API\TFA.API.csproj" />
+    <ProjectReference Include="..\TFA.API\TFA.Forum.API.csproj" />
   </ItemGroup>
 
 </Project>

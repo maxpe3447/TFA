@@ -45,7 +45,6 @@
     <!--<ProjectReference Include="..\TFA.Domain\WTFA.Domain.csproj" />-->
     <ProjectReference Include="..\TFA.Domain\TFA.Forum.Domain.csproj" />
     <ProjectReference Include="..\TFA.Storage.DependencyInjection\TFA.Forum.Storage.DependencyInjection.csproj" />
-    <ProjectReference Include="..\TFA.Storage\TFA.Storage.csproj" />
   </ItemGroup>
 
 	<ItemGroup>

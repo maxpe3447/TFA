@@ -7,7 +7,7 @@ internal class DomainEventProfile : Profile
 {
     public DomainEventProfile()
     {
-        CreateMap<ForumDomainEvent, Entities.ForumDomainEvent>();
-        CreateMap<ForumDomainEvent.ForumComment, Entities.ForumDomainEvent.ForumComment>();
+        CreateMap<ForumDomainEvent, Models.ForumDomainEvent>();
+        CreateMap<ForumDomainEvent.ForumComment, Models.ForumDomainEvent.ForumComment>();
     }
 }

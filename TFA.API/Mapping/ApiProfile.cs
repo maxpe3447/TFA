@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using TFA.Forum.Domain.Models;
 
-namespace TFA.API.Mapping
+namespace TFA.Forum.API.Mapping;
+
+public class ApiProfile : Profile
 {
-    public class ApiProfile : Profile
+    public ApiProfile()
     {
-        public ApiProfile()
-        {
-            CreateMap<Forum, Models.Forum>();
-            CreateMap<Topic, Models.Topic>();
-        }
+        CreateMap<Domain.Models.Forum, Models.Forum>();
+        CreateMap<Topic, Models.Topic>();
+        CreateMap<Comment, Models.Comment>();
     }
 }

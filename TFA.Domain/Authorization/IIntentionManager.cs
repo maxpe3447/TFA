@@ -1,11 +1,11 @@
-﻿using TFA.Domain.Authorization;
-using TFA.Forum.Domain.Authentication;
+﻿using TFA.Forum.Domain.Authentication;
 
 namespace TFA.Forum.Domain.Authorization;
 
 public interface IIntentionManager
 {
     bool IsAllowed<TIntention>(TIntention intention) where TIntention : struct;
+    bool IsAllowed<TIntention, TObject>(TIntention intention, TObject target) where TIntention : struct;
 }
 
 internal class IntentionManager : IIntentionManager
@@ -26,6 +26,13 @@ internal class IntentionManager : IIntentionManager
 
         return matchingResolver?.IsAllowed(identityProvider.Current, intention) ?? false;
     }
+
+    public bool IsAllowed<TIntention, TObject>(TIntention intention, TObject target) where TIntention : struct
+    {
+        var matchingResolver = resolvers.OfType<IIntentionResolver<TIntention, TObject>>().FirstOrDefault();
+
+        return matchingResolver?.IsAllowed(identityProvider.Current, intention, target) ?? false;
+    }
 }
 
 internal static class IntentionManagerExtensions
@@ -34,6 +41,15 @@ internal static class IntentionManagerExtensions
         where TIntention : struct
     {
         if (!intentionManager.IsAllowed(intention))
+        {
+            throw new IntentionManagerException();
+        }
+    }
+    public static void ThrowIfForbidden<TIntention, TObject>(this IIntentionManager intentionManager, 
+        TIntention intention,
+        TObject target) where TIntention : struct
+    {
+        if (!intentionManager.IsAllowed(intention, target))
         {
             throw new IntentionManagerException();
         }

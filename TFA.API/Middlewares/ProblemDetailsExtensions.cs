@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using TFA.Domain.Authorization;
-using TFA.Domain.Exceptions;
+using TFA.Forum.Domain.Authorization;
+using TFA.Forum.Domain.Exceptions;
 
 namespace TFA.API.Middlewares;
 
@@ -11,7 +11,7 @@ public static class ProblemDetailsExtensions
 {
     public static ProblemDetails CreateFrom(this ProblemDetailsFactory factory,
         HttpContext context,
-        IntentionManagerException intentionManagerException) => 
+        IntentionManagerException intentionManagerException) =>
         factory.CreateProblemDetails(context,
             StatusCodes.Status403Forbidden,
             "Authorization failed",

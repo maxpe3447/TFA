@@ -1,8 +1,9 @@
 ﻿namespace TFA.Forum.API.Models;
 
-public class Topic
+public class Comment
 {
     public Guid Id { get; set; }
-    public string Title { get; set; }
+    public string Text { get; set; }
     public DateTimeOffset CreatedAt { get; set; }
+    public string AuthorLogin { get; set; }
 }

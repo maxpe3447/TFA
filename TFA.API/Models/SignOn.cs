@@ -1,4 +1,4 @@
-﻿namespace TFA.API.Models;
+﻿namespace TFA.Forum.API.Models;
 
 public class SignOn
 {

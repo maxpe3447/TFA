@@ -2,7 +2,7 @@
 using TFA.Domain.Authentication;
 using TFA.Forum.Domain.Authentication;
 
-namespace TFA.API.Middlewares;
+namespace TFA.API.Middleware;
 
 public class AuthenticationMiddleware
 {

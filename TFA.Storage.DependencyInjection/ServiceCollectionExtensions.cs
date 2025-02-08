@@ -4,6 +4,7 @@ using System.Reflection;
 using TFA.Forum.Domain;
 using TFA.Forum.Domain.Authentication;
 using TFA.Forum.Domain.UseCases;
+using TFA.Forum.Domain.UseCases.CreateComment;
 using TFA.Forum.Domain.UseCases.CreateForum;
 using TFA.Forum.Domain.UseCases.CreateTopic;
 using TFA.Forum.Domain.UseCases.GetForums;
@@ -32,6 +33,7 @@ public static class ServiceCollectionExtensions
             .AddScoped<IAuthenticationStorage, AuthenticationStorage>()
             .AddScoped<IGuidFactory, GuidFactory>()
             .AddScoped<IMomentProvider, MomentProvider>()
+            .AddScoped<ICreateCommentStorage, CreateCommentStorage>()
             .AddDbContextPool<ForumDbContext>(opt => opt
                 .UseNpgsql(connectionString));
 

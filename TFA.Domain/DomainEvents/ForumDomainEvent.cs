@@ -1,4 +1,6 @@
-﻿namespace TFA.Forum.Domain.DomainEvents;
+﻿using TFA.Forum.Domain.Models;
+
+namespace TFA.Forum.Domain.DomainEvents;
 
 public enum ForumDomainEventType
 {
@@ -14,18 +16,38 @@ public enum ForumDomainEventType
 
 public class ForumDomainEvent
 {
-    public ForumDomainEventType EventType { get; set; }
+    private ForumDomainEvent() { }
+    public ForumDomainEventType EventType { get; init; }
 
-    public Guid TopicId { get; set; }
+    public Guid TopicId { get; init; }
 
-    public string Title { get; set; } = null!;
+    public string Title { get; init; } = null!;
 
-    public ForumComment Comment { get; set; }
+    public ForumComment Comment { get; init; }
 
     public class ForumComment
     {
-        public Guid CommentId { get; set; }
+        public Guid CommentId { get; init; }
 
-        public string Text { get; set; } = null!;
+        public string Text { get; init; } = null!;
     }
+    public static ForumDomainEvent TopicCreated(Topic topic) => new ForumDomainEvent
+    {
+        EventType = ForumDomainEventType.TopicCreated,
+        TopicId = topic.Id,
+        Title = topic.Title,
+        Comment = null!
+    };
+
+    internal static ForumDomainEvent CommentCreated(Topic topic, Comment comment) => new ForumDomainEvent
+    {
+        EventType = ForumDomainEventType.CommentCreated,
+        TopicId = topic.Id,
+        Title = topic.Title,
+        Comment = new ForumComment
+        {
+            CommentId = comment.Id,
+            Text = comment.Text,
+        }
+    };
 }

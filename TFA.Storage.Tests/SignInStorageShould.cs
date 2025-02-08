@@ -1,7 +1,7 @@
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using TFA.Forum.Storage.Entities;
-using TFA.Storage.Tests;
+using TFA.Forum.Storage.Storages;
 
 namespace TFA.Forum.Storage.Tests;
 

@@ -1,11 +1,11 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TFA.API.IAuthentication;
-using TFA.API.Models;
-using TFA.Domain.UseCases.SignIn;
-using TFA.Domain.UseCases.SignOn;
+using TFA.Forum.API.Models;
+using TFA.Forum.Domain.UseCases.SignIn;
+using TFA.Forum.Domain.UseCases.SignOn;
 
-namespace TFA.API.Controllers;
+namespace TFA.Forum.API.Controllers;
 
 [ApiController]
 [Route("account")]

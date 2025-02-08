@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using TFA.API;
 using TFA.API.IAuthentication;
+using TFA.API.Middleware;
 using TFA.API.Middlewares;
 using TFA.API.Monitoring;
 using TFA.Forum.Domain.Authentication;

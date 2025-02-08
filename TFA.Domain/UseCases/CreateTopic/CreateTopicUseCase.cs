@@ -38,11 +38,14 @@ internal class CreateTopicUseCase : IRequestHandler<CreateTopicCommand, Topic>
         await getForumsStorage.ThrowIfForumNotFound(forumId, cancellationToken);
 
         await using var scope = await unitOfWork.StartScope(cancellationToken);
-        var storage = scope.GetStorage<ICreateTopicStorage>();
-        var domainEventStorage = scope.GetStorage<IDomainEventStorage>();
+        var topic = await scope
+            .GetStorage<ICreateTopicStorage>()
+            .CreateTopic(forumId, identityProvider.Current.UserId, title, cancellationToken);
 
-        var topic = await storage.CreateTopic(forumId, identityProvider.Current.UserId, title, cancellationToken);
-        await domainEventStorage.AddEvent(topic, cancellationToken);
+        await scope
+            .GetStorage<IDomainEventStorage>()
+            .AddEvent(DomainEvents.ForumDomainEvent.TopicCreated(topic), cancellationToken);
+        
         await scope.Commit(cancellationToken);
 
         return topic;
